@@ -1,0 +1,106 @@
+.ModalWindow {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  background: rgba(0,0,0, .5);
+  justify-content: center;
+  display: flex;
+  box-shadow: 0px 2px 70px rgba(0, 0, 0, 0.0904665);
+}
+.ModalWindow-body{
+  padding: 0;
+  width: 80%;
+  background: #fff;
+  height: 700px;
+  margin: auto 0;
+  border-radius: 10px;
+  overflow: hidden;
+}
+.Close_modal{
+  position: relative;
+  padding: 1em;
+  float: right;
+  margin-left: -100px;
+  z-index: 2;
+}
+.Close_modal svg:hover{
+  cursor:pointer
+}
+.Close_modal svg{
+  height: 2em;
+  width: 2em;
+}
+.ModalWindow-left {
+  float: left;
+  width: 30%;
+  height: 100%;
+}
+
+.ModalWindow-right {
+  float: left;
+  width: 70%;
+  height: 100%;
+  border-radius: 10px;
+}
+
+.Contacts_modal {
+  width: 100%;
+  height: 100%;
+  background: #FFFFFF;
+}
+
+.Menu_modal {
+  width: 100%;
+  height: 100%;
+  background: #F7F7F7;
+  border-radius:0 10px 10px 0;
+}
+.Info_modal, .Menu_modal{
+  padding: 75px 30px;
+  height: 100%;
+}
+.Info_modal label.form-label{
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 0.8em;
+  line-height: 13px;
+  color: #000000;
+  opacity: 0.4;
+}
+.Info_modal button{
+  font-family: Roboto;
+  font-weight: bold;
+  font-size: 0.9em;
+  text-align: center;
+  text-transform: uppercase;
+  box-shadow: 0px 1px 4px rgba(121, 139, 149, 0.440274);
+  border-radius: 3px;
+}
+.Client_card button{
+  color: #000000;
+}
+.Info_modal input{
+  background: #F1F1F1;
+  border-radius: 3px;
+  border: none;
+}
+.Save_modal{
+  color: #FFFFFF;
+  background: #8D43FF;
+  border: none;
+}
+.Save_Status div.dropdown button{
+  float: right;
+}
+.Menu_List_Name_value{
+  padding: 1em;
+  background: #FFFFFF;
+  box-shadow: 0px 2px 11px rgba(56, 62, 68, 0.0862772);
+  border-radius: 4px;
+}
+.hover{
+  display: none;
+}
