@@ -1,13 +1,31 @@
 import React from 'react';
-import ListWorkers from '../DB/main_list_workers'
+import moment from 'moment';
+import {Container, Row, Col} from 'react-bootstrap';
+import RenderDataPagination from './paginatorDate';
+import RenderTable from './RenderTable';
 
 function BaseTable() {
-
-    console.log(ListWorkers)
-
+    //const [modalBox, setModalBox] = useState(false);
 
     return (
-        <p>dsdsd</p>
+        <Container>
+            <Row>
+                <Col xs={2}>1 of 3</Col>
+                <Col xs={10}>
+                <RenderDataPagination
+                    StartDate={moment().subtract(4,'days').format('DD MM YYYY')}
+                    EndDate={moment().add(17, 'days').format('DD MM YYYY')}
+                />
+                </Col>
+                <Col xs={2}>1 of 3</Col>
+                <Col xs={10}>
+                    <RenderTable
+                        Date={moment().format('DD MM YYYY')}
+                    />
+                </Col>
+            </Row>
+
+        </Container>
     )
 }
 

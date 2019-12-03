@@ -45,7 +45,7 @@ const styles = {
 
 function Menu_List({ menu }){
 
-    const { removeMenu, toggleMenu } = useContext(Context)
+    const { removeMenu, toggleMenu } = useContext(Context);
 
     return <li key={menu.id} className="Menu_Item" style={styles.Li}>
         <div className="Menu_List_Name_value">

@@ -1,0 +1,12 @@
+[
+  {"id":1, "name":"Haircut standard", "value":1, "time":30, "timeDef":30, "price":13, "priceDef":13},
+  {"id":2, "name":"Haircut standard №2", "value":1, "time":30, "timeDef":30, "price":13, "priceDef":13},
+  {"id":3, "name":"Haircut standard №3", "value":1, "time":30, "timeDef":30, "price":16, "priceDef":16},
+  {"id":4, "name":"Face cleaning", "value":1, "time":15, "timeDef":15, "price":10, "priceDef":10},
+  {"id":5, "name":"Face cleaning №1", "value":1, "time":15, "timeDef":15, "price":12, "priceDef":12},
+  {"id":6, "name":"Face cleaning №2", "value":1, "time":15, "timeDef":15, "price":14, "priceDef":14},
+  {"id":7, "name":"Face cleaning №3", "value":1, "time":15, "timeDef":15, "price":14, "priceDef":14},
+  {"id":8, "name":"Applying varnish", "value":1, "time":40, "timeDef":40, "price":25, "priceDef":25},
+  {"id":9, "name":"Applying varnish №1", "value":1, "time":30, "timeDef":30, "price":20, "priceDef":20},
+  {"id":10, "name":"Applying varnish №2", "value":1, "time":30, "timeDef":30, "price":18, "priceDef":18}
+]

@@ -1,0 +1,116 @@
+/*Classes for Pagination Calendar */
+.Pagination_date{overflow: scroll;height: 100px;}
+.Pagination_date>li>a{background: #FFFFFF;}
+.Pagination_date::-webkit-scrollbar { display: none;}
+.Pagination_date a.page-link{
+    border:none;
+    font-weight: bold;
+    color: #000000;
+}
+.Pagination_date .page-item{margin: .3rem .6rem;}
+.Pagination_date li.active>.page-link{
+    background: #8D43FF;
+    border:none;
+    border-radius: 50%;
+    padding: .5rem .7rem;
+}
+.Pagination_date a.page-link span, .Pagination_date li.active span.page-link span:first-child {
+    top: 50px;
+    left: 13px;
+    text-transform: uppercase;
+    position: absolute;
+    color: #B0B0B0;
+    font-weight: normal;
+}
+.disabled_padin>a{
+    color: #C3C6CA!important;
+    cursor: default;
+}
+.disabled_padin>a:hover{background: #FFFFFF;}
+
+/*Classes for Table*/
+.table-striped thead tr{background-color: #F2F2F2;}
+.table-striped tbody tr:nth-of-type(odd){background-color: #FFFFFF;}
+.table-striped tbody tr:nth-of-type(even){background-color: rgba(0,0,0,.05);}
+.table-striped tbody tr:nth-of-type(even) td:hover{border:none;background: initial;cursor:default}
+.THeadPrevNow{color: #8d8d8da8;background: #cacaca57;}
+.THeadNow{color: #8d8d8da8;position: relative;text-align: center; font-weight: bold;font-size: 0.8rem}
+.THeadNowBack{
+    background: #cacaca57;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+}
+.LINE_timeline{
+    height: 53rem;
+    width: 1px;
+    position: absolute;
+    right: 0;
+    top: -25px;
+    background: #F05252;
+}
+.THeadNowBack span{
+    position: absolute;
+    right: -19px;
+    top: -25px;
+    color: #FFFFFF;
+    background: #F05252;
+    border-radius: 8px;
+    padding: .1rem .2rem;
+    cursor: default;
+}
+.TableData{
+    margin-top: 2em;
+    background: inherit;
+    mix-blend-mode: normal;
+    width: 110rem;
+}
+.table td, .table th{border-top: none}
+.TableData td{
+    border-left: 1px dashed #c5bdbd;
+    border-right: 1px dashed #c5bdbd;
+}
+.TheadTable{
+    font-style: normal;
+    font-weight: bold;
+    width: 75px;
+}
+.DefaultBox{
+    height: 60px;
+    width:76px
+}
+.DefaultBox:hover{border: 1px solid #CFB0FF;border-radius: 5px;cursor: pointer;background: #F8F4FF;}
+
+
+/*Classes for Box of Table*/
+.InitData_in_Table{
+    height: 100%;
+    width: 15rem;
+    background: #FFFFFF;
+    border-radius: 5px;
+    position: relative;
+}
+.InitData_in_Table:hover{cursor: pointer;background: #F8F4FF;}
+.InitData_in_Table>span:first-child{justify-content: space-between; padding: .7rem;font-size: .75rem;}
+.InitData_in_Table>span{
+    padding: .2rem .7rem;
+    display: flex;
+    font-size: .9rem;
+    justify-content:left;
+}
+.InitData_in_Table>span>strong{ display: flex; align-items: center;}
+.InitData_in_Table>span>strong>svg{ margin-right: .2rem; }
+.InitData_in_Table>span:last-child{color: #000000; opacity: 0.4; font-size: .75rem;}
+
+
+/*Classes for change Tables*/
+.ClockNotCome{color: #FF6043;}
+.ClockCome{color: #8D8D8D;}
+.ClockWaitCome{color: #8D43FF;}
+.moneyGray{background: #E9E9E9;border-radius: 8px;padding: .1rem .3rem;}
+.moneyGreen{background: #81DA67;border-radius: 8px;padding: .1rem .3rem;}
+.redShadow{box-shadow: 0 3px 1px #FF6043;}
+.grayShadow{box-shadow: 0 3px 1px #8D8D8D;}
+.defaultShadow{box-shadow: 0 3px 1px #8D43FF;}
+.DidNotCome{display: block!important;padding-top: .2rem;}
