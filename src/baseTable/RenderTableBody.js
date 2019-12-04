@@ -1,6 +1,6 @@
 import React from 'react';
 import moment from 'moment';
-import { IoMdTime } from "react-icons/io";
+import Order from './RenderTableOrder';
 
 function return_TIME_PRICE (Main_menu, data) {
     const id_menus = data.id_menu;
@@ -17,32 +17,6 @@ function return_TIME_PRICE (Main_menu, data) {
     const Time = menus.reduce((result, num) => result + num.time, 0);
     const Price = menus.reduce((result, num) => result + num.price, 0);
     return {time:Time, price:Price, name_first_menu:NameFirst}
-}
-
-function Check_TIME_and_Return_Classes( CheckTime, Payd, Status ) {
-    if(isNaN(CheckTime)) return false; //Check on Number
-    //Get now minutes
-    let m = moment(new Date());
-    let Time_Now_Today = m.hour()*60 + m.minute()
-
-    if(CheckTime <= Time_Now_Today){
-        if(!Status) return {
-            DidNotCome:'DidNotCome',
-            Time:'ClockNotCome',
-            Money:'moneyGray',
-            BoxShadow:'redShadow'
-        };
-        if(Status && Payd) return {
-            Time:'ClockCome',
-            Money:'moneyGreen',
-            BoxShadow:'grayShadow'
-        }
-    }
-    else return {
-        Time:'ClockWaitCome',
-        Money:'moneyGray',
-        BoxShadow:'defaultShadow'
-    }
 }
 
 function addOrder_for_Specialist (Specialist_id, TimeID, LengthOrders){
@@ -78,36 +52,19 @@ function RenderTableBody(props) {
     return(
         List_Workers_add_pass.map(worker =>{
             const groupS = List_job_for_workers.filter(list_workers => list_workers.group === worker.id);
-
             return(
                 <tr key={worker.id}>{
                     Time_Minutes_Body.map(row_times =>{
-
                         for(let i=0; i < groupS.length; i++){
                             const TIME_PRICE = return_TIME_PRICE(Main_menu, groupS[i]);
                             const ColSpan = Math.ceil(TIME_PRICE.time/30);
-                            const Width_percent = Math.round((TIME_PRICE.time/30) / ColSpan * 100) + '%';
-
                             if(groupS[i].time_start === row_times.id){
-                                const startTime = moment().startOf('day').add(groupS[i].time_start, 'minutes').format('HH:mm');
-                                const Time_Classes = Check_TIME_and_Return_Classes(groupS[i].time_start + TIME_PRICE.time, groupS[i].payd , groupS[i].status);
-                                const ClassesBox = Time_Classes.BoxShadow + ' InitData_in_Table'; //Create Classes for Box in Table
-
-                                return (<td key={row_times.id} style={{height: '86px', width:'152px', padding: '0 .2rem'}} colSpan={ColSpan}>
-
-                                    <div className={ClassesBox} style={{width:Width_percent}}>
-                                        <span>
-                                            <strong className={Time_Classes.Time}>
-                                                <IoMdTime/>
-                                                {startTime}
-                                            </strong>
-                                            <span style={{fontSize:'.5rem', display:'none'}} className={Time_Classes.DidNotCome}>Did not come</span>
-                                            <span className={Time_Classes.Money}>{TIME_PRICE.price}$</span>
-                                        </span>
-                                        <span>{groupS[i].name}</span>
-                                        <span>{TIME_PRICE.name_first_menu}</span>
-                                    </div>
-                                </td>)
+                                return (<Order
+                                    groupS={groupS[i]}
+                                    Main_menu={Main_menu}
+                                    id={row_times.id}
+                                    key={row_times.id}
+                                />)
                             }
 
                             for(let y=0; y<ColSpan; y++){

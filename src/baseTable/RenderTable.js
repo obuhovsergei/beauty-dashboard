@@ -12,7 +12,7 @@ function RenderTable(){
 
     const TimeBorderTable = {
         start:510, //Begin timetable in minutes
-        end:1080,  //End timetable in minutes
+        end:1020,  //End timetable in minutes
         step:30    //Step of time in minutes
     }; // From 9:00 to 18:00
 
