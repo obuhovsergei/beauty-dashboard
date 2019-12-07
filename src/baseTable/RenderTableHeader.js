@@ -2,7 +2,7 @@ import React, {useState, useEffect } from 'react';
 import moment from "moment";
 
 function Time_Now() {
-    const m = moment(new Date()).add(10, 'hour');
+    const m = moment(new Date()).add(12, 'hour');
     return m.hour()*60 + m.minute()
 }
 
@@ -16,8 +16,8 @@ function RenderTableHeader({DataHead}) {
         let interval = null;
         interval = setInterval(() => {
             setTimeNow(timeNow => moment().startOf('day').add(Time_Now(), 'minutes').format('HH:mm'));
-            }, 60000);
-        return () => setInterval(interval);
+            }, 1000);
+        return () => clearInterval(interval);
     }, [timeNow]);
 
 

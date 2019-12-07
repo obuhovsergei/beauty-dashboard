@@ -2,8 +2,8 @@ import React from 'react';
 import {Table} from 'react-bootstrap';
 import RenderTableHeader from './RenderTableHeader';
 import RenderTableBody from './RenderTableBody';
-import DATA_workers from '../DB/List_workers';
-import List_workers from '../DB/main_list_workers';
+import DATA_workers from '../DB/List_Orders';
+import List_workers from '../DB/Specialists';
 import Main_menu from '../DB/main_menu';
 import moment from "moment";
 

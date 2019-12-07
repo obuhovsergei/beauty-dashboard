@@ -1,3 +1,4 @@
+/*Classes for Modal*/
 .ModalWindow {
   position: fixed;
   top: 0;
@@ -25,32 +26,14 @@
   margin-left: -100px;
   z-index: 2;
 }
-.Close_modal svg:hover{
-  cursor:pointer
-}
-.Close_modal svg{
-  height: 2em;
-  width: 2em;
-}
-.ModalWindow-left {
-  float: left;
-  width: 30%;
-  height: 100%;
-}
+.Close_modal svg:hover{cursor:pointer}
+.Close_modal svg{height: 2em;width: 2em;}
+.ModalWindow-left {float: left;width: 30%;height: 100%;}
+.ModalWindow-right {float: left;width: 70%;height: 100%;border-radius: 10px;}
 
-.ModalWindow-right {
-  float: left;
-  width: 70%;
-  height: 100%;
-  border-radius: 10px;
-}
 
-.Contacts_modal {
-  width: 100%;
-  height: 100%;
-  background: #FFFFFF;
-}
-
+/*Modal Infos*/
+.Contacts_modal {width: 100%;height: 100%;background: #FFFFFF;}
 .Menu_modal {
   width: 100%;
   height: 100%;
@@ -58,8 +41,10 @@
   border-radius:0 10px 10px 0;
 }
 .Info_modal, .Menu_modal{
-  padding: 75px 30px;
   height: 100%;
+  width: 100%;
+  position: relative;
+  padding: 4rem 1.5rem;
 }
 .Info_modal label.form-label{
   font-family: Roboto;
@@ -79,28 +64,25 @@
   box-shadow: 0px 1px 4px rgba(121, 139, 149, 0.440274);
   border-radius: 3px;
 }
-.Client_card button{
-  color: #000000;
+.Client_card button{color: #000000;}
+.Info_modal input{background: #F1F1F1;border-radius: 3px;border: none;}
+.Save_modal{color: #FFFFFF;background: #8D43FF;border: none;padding: .5rem .2rem!important;}
+#dropdown-basic-button{padding: .5rem 1rem;}
+.hover{display: none;}
+.Buttons_modal_save{
+  position: absolute;
+  bottom: 2rem;
+  width: 100%;
+  margin-bottom:0;
+  padding-right: 3rem;
 }
-.Info_modal input{
-  background: #F1F1F1;
-  border-radius: 3px;
-  border: none;
-}
-.Save_modal{
-  color: #FFFFFF;
-  background: #8D43FF;
-  border: none;
-}
-.Save_Status div.dropdown button{
-  float: right;
-}
+.Save_Status div.dropdown button{float: right;}
 .Menu_List_Name_value{
   padding: 1em;
   background: #FFFFFF;
   box-shadow: 0px 2px 11px rgba(56, 62, 68, 0.0862772);
   border-radius: 4px;
 }
-.hover{
-  display: none;
-}
+.btn-sm{padding: .1rem 2rem;text-transform: uppercase;border-radius: unset;}
+.paddingGrid{padding: .5rem 1rem}
+.paddingGridTime{padding: .5rem .2rem}

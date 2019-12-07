@@ -20,7 +20,6 @@ const styles = {
         paddingLeft: '1em'
     },
     Price:{
-        background: '#F7F7F7',
         boxShadow: '0px 2px 70px rgba(0, 0, 0, 0.0904665)',
         borderRadius: '0 0 10px 10px',
         margin:'0 1.5em',
@@ -28,8 +27,7 @@ const styles = {
         textAlign:'center'
     },
     Li:{
-        marginBottom: '1.5em',
-        //cursor:'pointer'
+        marginBottom: '1.5em'
     },
     Value:{
         float:'right',
@@ -41,43 +39,43 @@ const styles = {
         borderRadius: '1em',
         cursor:'pointer'
     }
-}
+};
 
 function Menu_List({ menu }){
-
     const { removeMenu, toggleMenu } = useContext(Context);
 
-    return <li key={menu.id} className="Menu_Item" style={styles.Li}>
-        <div className="Menu_List_Name_value">
-            <Row>
-                <Col xs={6}>
-                    <Image src={Scissors} style={styles.Image} />
-                    <h6 style={styles.Name}>{menu.name}</h6>
-                </Col>
-                <Col xs={6}>
-                    <span
-                        style={styles.Value}
-                        onClick={ removeMenu.bind(null, menu.id)}
-                    ><IoIosTrash /></span>
-                    <div style={styles.Value}>
-                        <IoIosArrowBack
-                            style={styles.Arrows}
-                            onClick={toggleMenu.bind(null, menu.id, 'down')}/>
-                        <span>{menu.value}</span>
-                        <IoIosArrowForward
-                            style={styles.Arrows}
-                            onClick={toggleMenu.bind(null, menu.id, 'up')}/>
-                    </div>
+    return (
+        <li key={(new Date()).getTime()} className="Menu_Item" style={styles.Li}>
+            <div className="Menu_List_Name_value">
+                <Row>
+                    <Col xs={6}>
+                        <Image src={Scissors} style={styles.Image} />
+                        <h6 style={styles.Name}>{menu.name}</h6>
+                    </Col>
+                    <Col xs={6}>
+                        <span
+                            style={styles.Value}
+                            onClick={ removeMenu.bind(null, menu.id)}
+                        ><IoIosTrash /></span>
+                        <div style={styles.Value}>
+                            <IoIosArrowBack
+                                style={styles.Arrows}
+                                onClick={toggleMenu.bind(null, menu.id, 'down')}/>
+                            <strong>{menu.value}</strong>
+                            <IoIosArrowForward
+                                style={styles.Arrows}
+                                onClick={toggleMenu.bind(null, menu.id, 'up')}/>
+                        </div>
 
-                </Col>
-            </Row>
-        </div>
-        <div className="Menu_List_Time_Price" style={styles.Price}>
-            <span>{
-                getTimeToMin(menu.time)} - {menu.price}$
-            </span>
-        </div>
-    </li>
+                    </Col>
+                </Row>
+            </div>
+            <div className="Menu_List_Time_Price" style={styles.Price}>
+                <span>
+                    {getTimeToMin(menu.time)} - {menu.price}$
+                </span>
+            </div>
+        </li>)
 }
 
 Menu_List.propTypes = {

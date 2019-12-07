@@ -1,25 +1,14 @@
 import React from "react";
 import PropTypes from 'prop-types';
-import { IoIosAdd } from 'react-icons/io';
 import Menu_List from './Order_menu_list';
 import Total_info_render from "./Total_info_render";
+import AddNewProduct from "./AddNewProduct";
 
 const styles = {
     ul:{
         listStyle:'none',
         margin:0,
         padding:0
-    },
-    addIcon:{
-        background: '#FFFFFF',
-        border: '1px solid #D9D9D9',
-        width:'28px',
-        height:'28px',
-        borderRadius:'1em',
-        float:'left',
-        marginRight:'1em',
-        boxShadow: '0px 1px 3px rgba(168, 168, 168, 0.21691)',
-        cursor:'pointer'
     },
     noMenu:{
         textAlign:'center'
@@ -45,28 +34,48 @@ const styles = {
     }
 };
 
+function ValueOfMenus(Menus){
+    let val = -1;
+    let id = 0;
+    let arr =[];
+    for(let i = 0; i<Menus.length; i++){
+        if(val === Menus[i].id ){
+            id = Menus[i].id
+        }
+        else {
+            arr.push(Menus[i])
+            val = Menus[i].id;
+        }
+    }
+    for(let i = 0; i<arr.length; i++){
+        if(id === arr[i].id){
+            arr[i].value = arr[i].value+1;
+            arr[i].time = arr[i].time*2;
+            arr[i].price = arr[i].price*2;
+        }
+    }
+    return arr
+}
 
-
-function Order_menu_of_User(props) {
+function Order_menu_of_User({order_menus, total_menu, infoModal}) {
+    const Orders_menus = ValueOfMenus(order_menus);
     return (
         <div className="Menu_modal">
             <div className="Order_menu">
-                {props.order_menus.length ? (
+                {Orders_menus.length ? (
                     <ul style={styles.ul}>
-                        { props.order_menus.map(menu => {
-                            return <Menu_List menu={menu} key={menu.id} />
+                        { Orders_menus.map(menu => {
+                            return (<Menu_List menu={menu} key={menu.id} />)
                         })}
                     </ul>
                 ):(
-                    <p style={styles.noMenu}>Sorry, you no have menu</p>
+                    <p style={styles.noMenu}>Sorry, you no have any orders</p>
                 )}
-
-                <div className="Add_services">
-                    <IoIosAdd style={styles.addIcon} />
-                    <span>Add goods or services</span>
-                </div>
-                { props.total_menu.map(TotalMenu => {
-                    return <Total_info_render TotalMenu={TotalMenu} key={(new Date).getTime()} />
+                <AddNewProduct
+                    infoModal={infoModal}
+                />
+                { total_menu.map(TotalMenu => {
+                    return (<Total_info_render TotalMenu={TotalMenu} infoModal={infoModal} key={(new Date()).getTime()} />)
                 })}
             </div>
         </div>

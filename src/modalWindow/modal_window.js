@@ -1,25 +1,27 @@
-import React from 'react';
-import { Button } from 'react-bootstrap';
+import React, {useContext} from 'react';
 import './modal_window.css';
 import Context from './Context'
+import ModalContext from "../baseTable/ModalContext";
 import { IoIosClose} from 'react-icons/io';
 import Information_of_User from './Contacts_modal.js';
 import Order_menu_of_User from './Order_menu.js';
 import ChangeTotalTimePrice from "./ChangeTotalTimePrice";
+import MainMenu from '../DB/main_menu';
 
 
-function ModalWindow() {
-    //Modal Menus
-    const [order_menus, setOrder_menus] = React.useState([
-        {id:1, name:"Haircut standart", value:1, time:30, timeDef:30, price:13, priceDef:13},
-        {id:2, name:"Face cleaning", value:1, time:30, timeDef:30, price:13, priceDef:13},
-        {id:3, name:"Face cleaning №1", value:1, time:15, timeDef:15, price:10, priceDef:10}
-    ]);
+
+function ModalWindow({infoModal}) {
+    // Modal Active Menus
+    let ActiveMenus = [];
+    //Change to FOR
+    infoModal.id_menu.map(id_menu =>{
+        MainMenu.map(order_menu =>{if(order_menu.id === id_menu) ActiveMenus.push(order_menu)})
+    });
+    //Change to FOR
+    const [order_menus, setOrder_menus] = React.useState(ActiveMenus);
 
     // Modal Windows State
-    const [show, setShow] = React.useState(false);
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    const { ShowModal } = useContext(ModalContext);
 
     //Modal Total Price
     const [TotalMenu, setTotalMenu] = React.useState([{price:0, time:0}]);
@@ -28,55 +30,57 @@ function ModalWindow() {
 
     // Modal Change order in menus. Up and down value
     function toggleMenu(id, toggle) {
-        setOrder_menus(
-            order_menus.map(menu => {
-                if(menu.id === id){
-                    if(toggle === 'down' && menu.value > 1){
-                        menu.value--;
-                        menu.time -= menu.timeDef;
-                        menu.price -= menu.priceDef;
-                    }
-                    else {
-                        menu.value++;
-                        menu.time += menu.timeDef;
-                        menu.price += menu.priceDef;
-                    }
+        let flag = false;
+        let Up_Menu;
+        for(let i=0; i<order_menus.length; i++) {
+            if(order_menus[i].id === id){
+                if(toggle === 'down'){
+                    if(order_menus[i].value === 1) setOrder_menus(order_menus.filter(menu => menu.id !== id));
+                    else if(order_menus[i].value > 1) flag = true;
+                    else setOrder_menus(order_menus.filter(menu => menu.id !== id));
                 }
-                return menu
+                else Up_Menu = order_menus[i];
+            }
+        }
+        if(toggle === 'up')setOrder_menus(order_menu=> [... order_menu, Up_Menu]);
+        if(flag){
+            console.log(order_menus)
+            setOrder_menus(order_menus=> {
+                return order_menus.map(menu => {
+                    if(menu.id === id){
+                        menu.value = menu.value - 1;
+                        return menu
+                    }
+
+                })
             })
-        );
-        ChangeTotalTimePrice(order_menus, TotalMenu) /* Change Price and Time from Menus*/
+        }
+        console.log(order_menus);
+
     }
 
     function removeMenu(id) {
-        setOrder_menus(
-            order_menus.filter(menu => menu.id !== id)
-            );
-        ChangeTotalTimePrice(order_menus, TotalMenu) /* Change Price and Time from Menus*/
+        setOrder_menus(order_menus.filter(menu => menu.id !== id));
     }
-
     return (
         <Context.Provider value={{ removeMenu, toggleMenu }}>
-
-            <Button variant="primary" onClick={handleShow}>
-                Показать модалку
-            </Button>
-            {show &&(
-                <div className='ModalWindow'>
-                    <div className='ModalWindow-body'>
-                        <div className='Close_modal'><IoIosClose onClick={handleClose}/></div>
-                        <div className="ModalWindow-left">
-                            <Information_of_User />
-                        </div>
-                        <div className="ModalWindow-right">
-                            <Order_menu_of_User
-                                order_menus = {order_menus}
-                                total_menu = {TotalMenu}
-                            />
-                        </div>
+            <div className='ModalWindow'>
+                <div className='ModalWindow-body'>
+                    <div className='Close_modal'><IoIosClose onClick={ShowModal.bind(null, false)}/></div>
+                    <div className="ModalWindow-left">
+                        <Information_of_User
+                            infoModal={infoModal}
+                        />
+                    </div>
+                    <div className="ModalWindow-right">
+                        <Order_menu_of_User
+                            order_menus = {order_menus}
+                            total_menu = {TotalMenu}
+                            infoModal={infoModal}
+                        />
                     </div>
                 </div>
-            )}
+            </div>
 
         </Context.Provider>
     );

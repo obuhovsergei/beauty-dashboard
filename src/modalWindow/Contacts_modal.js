@@ -2,11 +2,15 @@ import React from "react";
 import {Button, Form, Row, Col, Dropdown, DropdownButton} from 'react-bootstrap';
 
 
-function Information_of_User() {
-    const [contactInfo, setContactInfo] = React.useState(
-        {name:'Prime', phone:'+7 934 332 34 23', comments:'', status:true}
-    );
 
+function Information_of_User({ infoModal }) {
+
+    const [contactInfo, setContactInfo] = React.useState(infoModal);
+    function Change_Status(evt){
+        let status = true;
+        if('false' === evt) status = false;
+        setContactInfo(contactInfo => {return {...contactInfo, status:status}})
+    }
 
 
     return (
@@ -26,7 +30,7 @@ function Information_of_User() {
                     name="Telephone"
                     type="text"
                     maxLength={12}
-                    defaultValue={contactInfo.phone} />
+                    defaultValue={contactInfo.telephone} />
             </Form.Group>
 
             <Form.Group className="Client_card">
@@ -60,14 +64,16 @@ function Information_of_User() {
                     </Col >
                     <Col xs={12} md={6}>
                         <DropdownButton
+                            onSelect={Change_Status}
                             id="dropdown-basic-button"
                             variant="Info"
                             title="status"
                             size="sm"
+                            drop='up'
                         >
                             <Dropdown.Header>User come or not</Dropdown.Header>
-                            <Dropdown.Item eventKey="1" active={!contactInfo.status}>Did not come </Dropdown.Item>
-                            <Dropdown.Item eventKey="2" active={contactInfo.status}> Come </Dropdown.Item>
+                            <Dropdown.Item eventKey="false" active={!contactInfo.status}>Did not come </Dropdown.Item>
+                            <Dropdown.Item eventKey="true" active={contactInfo.status}> Come </Dropdown.Item>
                         </DropdownButton>
                     </Col>
                 </Row>
