@@ -4,7 +4,7 @@ import Scissors from '../img/Sclssors.png';
 import PropTypes from 'prop-types';
 import Context from "./Context";
 import { IoIosTrash, IoIosArrowBack, IoIosArrowForward} from 'react-icons/io';
-import getTimeToMin from "./getTimeToMin";
+import { getTimeToMin } from "../baseTable/Fuctions";
 
 const styles = {
     Image:{
@@ -80,6 +80,6 @@ function Menu_List({ menu }){
 
 Menu_List.propTypes = {
     menu:PropTypes.object.isRequired
-}
+};
 
 export default Menu_List;

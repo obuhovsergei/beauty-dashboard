@@ -57,7 +57,7 @@ function ValueOfMenus(Menus){
     return arr
 }
 
-function Order_menu_of_User({order_menus, total_menu, infoModal}) {
+function Order_menu_of_User({order_menus, total_menu}) {
     const Orders_menus = ValueOfMenus(order_menus);
     return (
         <div className="Menu_modal">
@@ -72,10 +72,10 @@ function Order_menu_of_User({order_menus, total_menu, infoModal}) {
                     <p style={styles.noMenu}>Sorry, you no have any orders</p>
                 )}
                 <AddNewProduct
-                    infoModal={infoModal}
+                    //infoModal={infoModal}
                 />
                 { total_menu.map(TotalMenu => {
-                    return (<Total_info_render TotalMenu={TotalMenu} infoModal={infoModal} key={(new Date()).getTime()} />)
+                    return (<Total_info_render TotalMenu={TotalMenu} key={(new Date()).getTime()} />)
                 })}
             </div>
         </div>
@@ -85,6 +85,6 @@ function Order_menu_of_User({order_menus, total_menu, infoModal}) {
 Order_menu_of_User.propTypes = {
     order_menus: PropTypes.arrayOf(PropTypes.object).isRequired,
     total_menu: PropTypes.array.isRequired
-}
+};
 
 export default Order_menu_of_User;

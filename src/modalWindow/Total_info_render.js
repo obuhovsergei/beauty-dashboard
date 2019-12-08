@@ -1,8 +1,8 @@
-import React from "react";
-import moment from 'moment';
-import getTimeToMin from "./getTimeToMin";
+import React, {useContext} from "react";
+import { getTimeToMin, Return_Start_End_Times } from "../baseTable/Fuctions";
 import {Button, Col, Row} from "react-bootstrap";
 import { IoMdTime } from "react-icons/io";
+import ModalContext from "../baseTable/ModalContext";
 
 const styles = {
     Total_info:{
@@ -16,17 +16,11 @@ const styles = {
     }
 };
 
-function Return_Start_End_Times (StartMinutes, EndMinutes){
-    if(typeof(StartMinutes) === 'number' && typeof(EndMinutes) === 'number'){
-        const Start = moment().startOf('day').add(StartMinutes, 'minutes').format('HH:mm');
-        const End = moment().startOf('day').add(StartMinutes + EndMinutes, 'minutes').format('HH:mm');
-        if(StartMinutes > 1) return {Start:Start, End:End }
-        else return {Start:StartMinutes, End:End }
-    }
-    else return false
-}
 
-function Total_info_render({TotalMenu, infoModal}){
+
+function Total_info_render({TotalMenu}){
+    const { infoModal } = useContext(ModalContext);
+
     const Start_End = Return_Start_End_Times(infoModal.time_start, TotalMenu.time);
     return(
         <Row style={styles.Total_info} className='Buttons_modal_save'>
@@ -41,7 +35,6 @@ function Total_info_render({TotalMenu, infoModal}){
                 <span className='paddingGrid'><strong>{TotalMenu.price}$</strong></span>
                 <Button variant="success" size="sm"><IoMdTime/> Pay</Button>
             </Col>
-
         </Row>
     )
 }

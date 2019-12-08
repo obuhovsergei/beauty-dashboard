@@ -1,9 +1,10 @@
-import React from "react";
+import React, {useContext} from "react";
 import {Button, Form, Row, Col, Dropdown, DropdownButton} from 'react-bootstrap';
+import ModalContext from "../baseTable/ModalContext";
 
 
-
-function Information_of_User({ infoModal }) {
+function Information_of_User()  {
+    const { infoModal } = useContext(ModalContext);
 
     const [contactInfo, setContactInfo] = React.useState(infoModal);
     function Change_Status(evt){

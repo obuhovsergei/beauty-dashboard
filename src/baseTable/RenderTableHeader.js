@@ -1,10 +1,7 @@
 import React, {useState, useEffect } from 'react';
 import moment from "moment";
+import { Time_Now } from './Fuctions';
 
-function Time_Now() {
-    const m = moment(new Date()).add(12, 'hour');
-    return m.hour()*60 + m.minute()
-}
 
 function RenderTableHeader({DataHead}) {
     const Time_Now_Today = Time_Now();
@@ -27,16 +24,9 @@ function RenderTableHeader({DataHead}) {
         else if(HourCheck === HourNow) {
             const Width_percent = Math.round(MinutesNow / 60 * 100) + '%';
             return(
-                <td
-                    key={row.id}
-                    className='THeadNow'
-                    colSpan={2}
-                >
+                <td key={row.id} className='THeadNow' colSpan={2}>
                     {row.value}
-                    <div
-                        className='THeadNowBack'
-                        style={{width:Width_percent}}
-                    >
+                    <div className='THeadNowBack' style={{width:Width_percent}}>
                         <hr className='LINE_timeline'/>
                         <span>{timeNow}</span>
                     </div>

@@ -2,54 +2,14 @@ import React, {useState, useEffect, useContext} from 'react';
 import moment from 'moment';
 import { IoMdTime } from "react-icons/io";
 import ModalContext from "./ModalContext";
+import { return_TIME_PRICE_ , Check_TIME_and_Return_Classes_} from './Fuctions';
 
-function return_TIME_PRICE_ (Main_menu, data) {
-    const id_menus = data.id_menu;
-    let menus = [];
-    for(let i=0; i<id_menus.length; i++){
-        for(let j=0; j<Main_menu.length; j++){
-            if(Main_menu[j].id === id_menus[i]) menus.push(Main_menu[j])
-        }
-    }
-    let NameFirst = '';
-    for(let k=0; k < menus.length; k++){
-        if(k === 0) NameFirst = menus[k].name
-    }
-    const Time = menus.reduce((result, num) => result + num.time, 0);
-    const Price = menus.reduce((result, num) => result + num.price, 0);
-    return {time:Time, price:Price, name_first_menu:NameFirst}
-}
 
-function Check_TIME_and_Return_Classes_( CheckTime, Payd, Status ) {
-    if(isNaN(CheckTime)) return false; //Check on Number
-    //Get now minutes
-    const m = moment(new Date()).add(12, 'hour');
-    const Time_Now_Today = m.hour()*60 + m.minute();
-    if(CheckTime <= Time_Now_Today){
-        if(!Status) return {
-            DidNotCome:'DidNotCome',
-            Time:'ClockNotCome',
-            Money:'moneyGray',
-            BoxShadow:'redShadow'
-        };
-        if(Status && Payd) return {
-            Time:'ClockCome',
-            Money:'moneyGreen',
-            BoxShadow:'grayShadow'
-        }
-    }
-    else return {
-        Time:'ClockWaitCome',
-        Money:'moneyGray',
-        BoxShadow:'defaultShadow'
-    }
-}
-
-function Order({groupS, Main_menu, id}) {
-    const { ShowModal } = useContext(ModalContext);
+function Order({groupS, id}) {
+    const { ShowModal, List_Menu } = useContext(ModalContext);
 
     const startTime = moment().startOf('day').add(groupS.time_start, 'minutes').format('HH:mm');
-    const TIME_PRICE = return_TIME_PRICE_(Main_menu, groupS);
+    const TIME_PRICE = return_TIME_PRICE_(List_Menu, groupS);
     const ColSpan = Math.ceil(TIME_PRICE.time/30);
     const Width_percent = Math.round((TIME_PRICE.time/30) / ColSpan * 100) + '%';
 
@@ -65,12 +25,7 @@ function Order({groupS, Main_menu, id}) {
 
     const ClassesBox = time_Classes.BoxShadow + ' InitData_in_Table'; //Create Classes for Box in Table
     return (<td key={id} style={{height: '5rem', width:'152px', padding: '0 .2rem'}} colSpan={ColSpan}>
-
-        <div
-            className={ClassesBox}
-            style={{width:Width_percent}}
-            onClick={ShowModal.bind(null, true, groupS)}
-        >
+        <div className={ClassesBox} style={{width:Width_percent}} onClick={ShowModal.bind(null, true, groupS)}>
             <span>
                 <strong className={time_Classes.Time}>
                     <IoMdTime/>

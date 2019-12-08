@@ -17,7 +17,7 @@ const styles = {
     }
 }
 
-function AddNewProduct({infoModal}) {
+function AddNewProduct() {
     const [dropdownMenus, setDropdownMenus] = useState(false);
 
     function ShowDropDownProduct(Show){
@@ -28,7 +28,6 @@ function AddNewProduct({infoModal}) {
         if('false' === evt) setDropdownMenus(false);
     }
 
-    console.log(infoModal);
     return (
         <div>
             {!dropdownMenus? (
