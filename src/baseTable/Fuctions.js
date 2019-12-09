@@ -75,8 +75,8 @@ function return_TIME_PRICE_(List_Menu, data) {
 function Check_TIME_and_Return_Classes_( CheckTime, Payd, Status ) {
     if(isNaN(CheckTime)) return false; //Check on Number
     //Get now minutes
-    const m = moment(new Date()).add(12, 'hour');
-    const Time_Now_Today = m.hour()*60 + m.minute();
+    const Time_Now_Today = Time_Now();
+
     if(CheckTime <= Time_Now_Today){
         if(!Status) return {
             DidNotCome:'DidNotCome',
@@ -97,14 +97,15 @@ function Check_TIME_and_Return_Classes_( CheckTime, Payd, Status ) {
     }
 }
 
-function ChangeTotalTimePrice(getDatafromArr, checkArr){
+function ChangeTotalTimePrice(getDatafromArr){
     const TimeTot = getDatafromArr.reduce((result, num) => result + num.time, 0)
     const PriceTot = getDatafromArr.reduce((result, num) => result + num.price, 0)
+    let Arr = [{price:0, time:0}];
 
-    checkArr.map(checkArr => checkArr.time = TimeTot)
-    checkArr.map(checkArr => checkArr.price = PriceTot)
+    Arr.map(checkArr => checkArr.time = TimeTot)
+    Arr.map(checkArr => checkArr.price = PriceTot)
 
-    return checkArr
+    return Arr
 }
 
 function getTimeToMin(mins){

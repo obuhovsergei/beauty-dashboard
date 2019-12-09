@@ -55,7 +55,7 @@ function Menu_List({ menu }){
                     <Col xs={6}>
                         <span
                             style={styles.Value}
-                            onClick={ removeMenu.bind(null, menu.id)}
+                            onClick={removeMenu.bind(null, menu.id)}
                         ><IoIosTrash /></span>
                         <div style={styles.Value}>
                             <IoIosArrowBack

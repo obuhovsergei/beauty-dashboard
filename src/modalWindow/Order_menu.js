@@ -1,8 +1,10 @@
-import React from "react";
+import React, {useContext} from "react";
 import PropTypes from 'prop-types';
 import Menu_List from './Order_menu_list';
 import Total_info_render from "./Total_info_render";
 import AddNewProduct from "./AddNewProduct";
+import ModalContext from "../baseTable/ModalContext";
+import {ChangeTotalTimePrice} from "../baseTable/Fuctions";
 
 const styles = {
     ul:{
@@ -35,30 +37,29 @@ const styles = {
 };
 
 function ValueOfMenus(Menus){
-    let val = -1;
-    let id = 0;
-    let arr =[];
-    for(let i = 0; i<Menus.length; i++){
-        if(val === Menus[i].id ){
-            id = Menus[i].id
-        }
-        else {
-            arr.push(Menus[i])
-            val = Menus[i].id;
-        }
-    }
-    for(let i = 0; i<arr.length; i++){
-        if(id === arr[i].id){
-            arr[i].value = arr[i].value+1;
-            arr[i].time = arr[i].time*2;
-            arr[i].price = arr[i].price*2;
-        }
-    }
-    return arr
+    console.log(Menus)
+    //Sort and del any copy menus
+    const newArr = Menus.sort(function (a,b) {return a.id < b.id ? -1 : 1}).reduce(function(Menus, el){
+        if(!Menus.length || Menus[Menus.length - 1].id !== el.id) Menus.push(el)
+        return Menus
+    }, []);
+    return newArr
 }
 
-function Order_menu_of_User({order_menus, total_menu}) {
-    const Orders_menus = ValueOfMenus(order_menus);
+function Order_menu_of_User() {
+    const { List_Menu, infoModal } = useContext(ModalContext);
+
+    // Modal Active Menus
+    let ActiveMenus = [];
+    infoModal.id_menu.forEach(id_menu =>{
+        List_Menu.forEach(order_menu =>{if(order_menu.id === id_menu) ActiveMenus.push(order_menu)})
+    });
+
+    //Modal Total Price
+    const TotalMenu = ChangeTotalTimePrice(ActiveMenus); /* Change Price and Time from Menus*/
+
+    const Orders_menus = ValueOfMenus(ActiveMenus); //Sort and del
+
     return (
         <div className="Menu_modal">
             <div className="Order_menu">
@@ -71,10 +72,8 @@ function Order_menu_of_User({order_menus, total_menu}) {
                 ):(
                     <p style={styles.noMenu}>Sorry, you no have any orders</p>
                 )}
-                <AddNewProduct
-                    //infoModal={infoModal}
-                />
-                { total_menu.map(TotalMenu => {
+                <AddNewProduct />
+                { TotalMenu.map(TotalMenu => {
                     return (<Total_info_render TotalMenu={TotalMenu} key={(new Date()).getTime()} />)
                 })}
             </div>
@@ -82,9 +81,5 @@ function Order_menu_of_User({order_menus, total_menu}) {
     )
 }
 
-Order_menu_of_User.propTypes = {
-    order_menus: PropTypes.arrayOf(PropTypes.object).isRequired,
-    total_menu: PropTypes.array.isRequired
-};
 
 export default Order_menu_of_User;

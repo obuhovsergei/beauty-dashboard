@@ -32,8 +32,6 @@ const defaultINFO = {
 function BaseTable() {
     const [modalBox, setModalBox] = useState(false); //Open Modal
     const [infoModal, setInfoModal] = useState(defaultINFO);
-
-
     function ShowModal( showmodal, Order, worker) {
         if(typeof(Order) === 'object') setInfoModal(infoModal => Order);
         else {
@@ -48,7 +46,7 @@ function BaseTable() {
     }
 
     return (
-        <ModalContext.Provider value={{ShowModal, setModalBox, Specialists, List_Menu, List_Orders, TimeBorderTable, infoModal}}>
+        <ModalContext.Provider value={{ShowModal, setModalBox, Specialists, List_Menu, List_Orders, TimeBorderTable, infoModal, setInfoModal}}>
             <Container>
                 <Row>
                     <Col xs={3}></Col>
