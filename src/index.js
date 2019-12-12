@@ -16,4 +16,4 @@ import BaseTable from './baseTable/Table'
     )
 }*/
 
-ReactDOM.render(<BaseTable />, document.getElementById('modal_window'));
+ReactDOM.render(<BaseTable />, document.getElementById('root'));

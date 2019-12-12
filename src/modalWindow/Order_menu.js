@@ -1,5 +1,4 @@
 import React, {useContext} from "react";
-import PropTypes from 'prop-types';
 import Menu_List from './Order_menu_list';
 import Total_info_render from "./Total_info_render";
 import AddNewProduct from "./AddNewProduct";
@@ -37,24 +36,40 @@ const styles = {
 };
 
 function ValueOfMenus(Menus){
-    console.log(Menus)
+    //Count repeat ID's
+    const CountOfMenus = Menus.reduce(function (item, i) {
+        if (!item.hasOwnProperty(i.id)) item[i.id] = 0;
+        item[i.id]++;
+        return item;
+    }, {});
+
+    let NewMenus = Menus.slice();
+    NewMenus.forEach((menu, index) => {
+        for(let count in CountOfMenus){
+            if(menu.id == count && CountOfMenus[count] > 1) {
+                NewMenus[index].value = CountOfMenus[count];
+                NewMenus[index].time = menu.timeDef * CountOfMenus[count];
+                NewMenus[index].price = menu.priceDef * CountOfMenus[count];
+            }
+        }
+    });
     //Sort and del any copy menus
-    const newArr = Menus.sort(function (a,b) {return a.id < b.id ? -1 : 1}).reduce(function(Menus, el){
-        if(!Menus.length || Menus[Menus.length - 1].id !== el.id) Menus.push(el)
-        return Menus
+    const newArr = NewMenus.sort(function (a,b) {return a.id < b.id ? -1 : 1}).reduce(function(NewMenus, el){
+        if(!NewMenus.length || NewMenus[NewMenus.length - 1].id !== el.id) NewMenus.push(el)
+        return NewMenus
     }, []);
     return newArr
 }
 
 function Order_menu_of_User() {
-    const { List_Menu, infoModal } = useContext(ModalContext);
-
+    const { infoModal} = useContext(ModalContext);
+    const List_Menu = JSON.parse(localStorage.getItem("List_Menu")); //Костыль
     // Modal Active Menus
     let ActiveMenus = [];
+    // ЗДЕСЬ ОБНОВЛЕНИЕ МЕНЮ ЧЕРЕЗ useState СДЕЛАТЬ!
     infoModal.id_menu.forEach(id_menu =>{
         List_Menu.forEach(order_menu =>{if(order_menu.id === id_menu) ActiveMenus.push(order_menu)})
     });
-
     //Modal Total Price
     const TotalMenu = ChangeTotalTimePrice(ActiveMenus); /* Change Price and Time from Menus*/
 
@@ -64,7 +79,7 @@ function Order_menu_of_User() {
         <div className="Menu_modal">
             <div className="Order_menu">
                 {Orders_menus.length ? (
-                    <ul style={styles.ul}>
+                    <ul style={styles.ul} className='List_Total_Specialists'>
                         { Orders_menus.map(menu => {
                             return (<Menu_List menu={menu} key={menu.id} />)
                         })}
@@ -73,13 +88,10 @@ function Order_menu_of_User() {
                     <p style={styles.noMenu}>Sorry, you no have any orders</p>
                 )}
                 <AddNewProduct />
-                { TotalMenu.map(TotalMenu => {
-                    return (<Total_info_render TotalMenu={TotalMenu} key={(new Date()).getTime()} />)
-                })}
+                <Total_info_render TotalMenu={TotalMenu} key={(new Date()).getTime()} />
             </div>
         </div>
     )
 }
-
 
 export default Order_menu_of_User;

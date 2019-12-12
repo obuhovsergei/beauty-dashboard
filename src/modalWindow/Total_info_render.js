@@ -19,9 +19,18 @@ const styles = {
 
 
 function Total_info_render({TotalMenu}){
-    const { infoModal } = useContext(ModalContext);
-
+    const { infoModal, setInfoModal, List_Orders } = useContext(ModalContext);
     const Start_End = Return_Start_End_Times(infoModal.time_start, TotalMenu.time);
+
+    function Pay(statusPay) {
+        if(statusPay, infoModal.id_menu.length){
+            infoModal.payd = statusPay;
+            infoModal.status = true;
+            setInfoModal(infoModal);
+            //Save to LocalStorage
+            if(localStorage.getItem('List_Orders') !== null && List_Orders) localStorage.setItem('List_Orders', JSON.stringify(List_Orders));
+        }
+    }
     return(
         <Row style={styles.Total_info} className='Buttons_modal_save'>
             <Col xs={4} style={{fontWeight:'bold'}}>
@@ -33,7 +42,12 @@ function Total_info_render({TotalMenu}){
             <Col xs={8} className='d-flex justify-content-end' style={styles.reverse}>
                 <span className='paddingGrid'>{getTimeToMin(TotalMenu.time)}</span>
                 <span className='paddingGrid'><strong>{TotalMenu.price}$</strong></span>
-                <Button variant="success" size="sm"><IoMdTime/> Pay</Button>
+                {infoModal.payd?(
+                    <Button variant="success" size="sm" disabled={true}><IoMdTime/> Payd</Button>
+                ):(
+                    <Button variant="success" size="sm" onClick={Pay.bind(null, true)}><IoMdTime/> Pay</Button>
+                )}
+
             </Col>
         </Row>
     )

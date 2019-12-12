@@ -35,8 +35,8 @@ body{background: #F2F2F2;}
     color: #B0B0B0;
     font-weight: normal;
 }
-.disabled_padin>a{color: #C3C6CA!important;cursor: default;}
-.disabled_padin>a:hover{background: #FFFFFF;}
+.disabled_pagin>a{color: #C3C6CA!important;cursor: default;}
+.disabled_pagin>a:hover{background: #FFFFFF;}
 
 
 /*Classes for Table*/
@@ -96,7 +96,7 @@ body{background: #F2F2F2;}
 .InitData_in_Table:hover{cursor: pointer;background: #F8F4FF;}
 .InitData_in_Table>span:first-child{justify-content: space-between; padding: .7rem;font-size: .75rem;}
 .InitData_in_Table>span{
-    padding: .2rem .7rem;
+    padding: .19rem .7rem;
     display: flex;
     font-size: .9rem;
     justify-content:left;

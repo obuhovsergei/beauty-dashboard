@@ -3,7 +3,7 @@ import moment from "moment";
 import {Pagination} from "react-bootstrap";
 
 function Time_Now() {
-    const m = moment(new Date()).add(12, 'hour');
+    const m = moment(new Date()).add(-10, 'hour');
     return m.hour()*60 + m.minute()
 }
 
@@ -30,10 +30,10 @@ function Generate_Paginator(StartDate, EndDate) {
         const Month = moment().subtract(i, 'days').format('MMM');
         k=++k;
         if(dd === '01'){
-            rows.push({id:Month, d:Month, disable: 'disabled_padin'})
+            rows.push({id:Month, d:Month, disable: 'disabled_pagin'})
             rows.push({id:k, d:dd, dayOf:dayOf})
         }
-        else if(dayOf === 'Sa' || dayOf === 'Su') rows.push({id:k, d:dd, disable: 'disabled_padin', dayOf:dayOf})
+        else if(dayOf === 'Sa' || dayOf === 'Su') rows.push({id:k, d:dd, disable: 'disabled_pagin', dayOf:dayOf})
         else rows.push({id:k, d:dd, dayOf:dayOf});
     }
 
@@ -78,7 +78,7 @@ function Check_TIME_and_Return_Classes_( CheckTime, Payd, Status ) {
     const Time_Now_Today = Time_Now();
 
     if(CheckTime <= Time_Now_Today){
-        if(!Status) return {
+        if(!Status || Status && !Payd) return {
             DidNotCome:'DidNotCome',
             Time:'ClockNotCome',
             Money:'moneyGray',
@@ -98,13 +98,9 @@ function Check_TIME_and_Return_Classes_( CheckTime, Payd, Status ) {
 }
 
 function ChangeTotalTimePrice(getDatafromArr){
-    const TimeTot = getDatafromArr.reduce((result, num) => result + num.time, 0)
-    const PriceTot = getDatafromArr.reduce((result, num) => result + num.price, 0)
-    let Arr = [{price:0, time:0}];
-
-    Arr.map(checkArr => checkArr.time = TimeTot)
-    Arr.map(checkArr => checkArr.price = PriceTot)
-
+    const TimeTot = getDatafromArr.reduce((result, num) => result + num.time, 0);
+    const PriceTot = getDatafromArr.reduce((result, num) => result + num.price, 0);
+    let Arr = {price:PriceTot, time:TimeTot};
     return Arr
 }
 
@@ -126,6 +122,30 @@ function Return_Start_End_Times (StartMinutes, EndMinutes){
     else return false
 }
 
+function Sorting_ListOrders(flag, Product, List_Orders,List_Menu, infoModal) {
+    const active_Menus = [];
+    infoModal.id_menu.forEach(id_menu =>{
+        List_Menu.forEach(order_menu =>{if(order_menu.id === id_menu) active_Menus.push(order_menu)})
+    });
+    const TotalMenu_Toggle = ChangeTotalTimePrice(active_Menus);
+    const TotalTime = infoModal.time_start + TotalMenu_Toggle.time;
+
+    List_Orders.forEach(list => {if(list.id === infoModal.id) flag = true});
+    //Filter group
+    const Filtered_List_Orders = List_Orders.filter(list => list.group === infoModal.group);
+    //Sort and del any copy menus
+    const sorting_List_Orders = Filtered_List_Orders.sort(function (a,b) {return a.time_start < b.time_start ? -1 : 1}).reduce(function(Filtered_List_Orders, el){
+        if(!Filtered_List_Orders.length || Filtered_List_Orders[Filtered_List_Orders.length - 1].id !== el.time_start) Filtered_List_Orders.push(el)
+        return Filtered_List_Orders
+    }, []);
+    //Sort to Time_start
+    sorting_List_Orders.forEach((list, index, arr) => {
+        if(list.id === infoModal.id && arr[index+1]) {
+            if(arr[index+1].time_start > TotalTime){infoModal.id_menu.push(Product)}
+        }
+    });
+}
+
 export {
     List_Workers_add,
     Generate_Paginator,
@@ -135,5 +155,6 @@ export {
     ChangeTotalTimePrice,
     getTimeToMin,
     Return_Start_End_Times,
+    Sorting_ListOrders
 }
 

@@ -13,6 +13,7 @@ moment.fn.fromNow = function (a) {
 
 function DatePagination({StartDate, EndDate}){
     const rows = Generate_Paginator(StartDate, EndDate);
+    console.log(rows)
     return(
         <Pagination className='Pagination_date'>
             {rows.map(row => {

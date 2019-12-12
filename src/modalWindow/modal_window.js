@@ -5,34 +5,51 @@ import ModalContext from "../baseTable/ModalContext";
 import { IoIosClose } from 'react-icons/io';
 import Information_of_User from './Contacts_modal.js';
 import Order_menu_of_User from './Order_menu.js';
+import { Sorting_ListOrders } from "../baseTable/Fuctions";
 
 
 function ModalWindow() {
-    const { List_Orders, infoModal, ShowModal } = useContext(ModalContext);
+    let { List_Orders, infoModal, ShowModal, List_Menu } = useContext(ModalContext);
 
     // Modal Change order in menus. Up and down value
-    function toggleMenu(id, toggle) {
+    function toggleMenu(Product, toggle) {
         const ID_List_orders = infoModal.id;
-        if(toggle === 'up') List_Orders.map(infoModal => {if(infoModal.id === ID_List_orders) infoModal.id_menu.push(id)})
-        else List_Orders.map(infoModal => {if(infoModal.id === ID_List_orders){
-            for(let j=0; j<infoModal.id_menu.length; j++){
-                if(infoModal.id_menu[j] === id) {
-                    infoModal.id_menu.splice(id, 1);
-                    break
+        let flag = false;
+        if(toggle === 'up') Sorting_ListOrders(flag, Product, List_Orders,List_Menu, infoModal);
+
+        else List_Orders.map(infoModal => {
+            if(infoModal.id === ID_List_orders){
+                for(let ID_menu in infoModal.id_menu){
+                    if(infoModal.id_menu[ID_menu] === Product){
+                        infoModal.id_menu.splice(ID_menu, 1);
+                        break
+                    }
                 }
             }
-        }})
+        });
+        //Save to LocalStorage
+        if(localStorage.getItem('List_Orders') !== null && List_Orders && !flag) localStorage.setItem('List_Orders', JSON.stringify(List_Orders));
     }
 
     function removeMenu(id) {
         const ID_List_orders = infoModal.id;
-        List_Orders.map(infoModal => {if(infoModal.id === ID_List_orders){
-            let Arr = [];
-            for(let j=0; j<infoModal.id_menu.length; j++){
-                if(infoModal.id_menu[j] !== id) Arr.push(infoModal.id_menu[j])
-            }
-            infoModal.id_menu = Arr;
+        let Arr = [];
+        List_Orders.map(infoModal => {
+            if(infoModal.id === ID_List_orders){
+                for(let j=0; j<infoModal.id_menu.length; j++){
+                     if(infoModal.id_menu[j] !== id) Arr.push(infoModal.id_menu[j])
+                }
         }})
+        infoModal.id_menu = Arr;
+        //Delete if No have any Orders
+        if(!infoModal.id_menu.length){
+            let INDEX_DEL = 0
+            List_Orders.forEach((list, index) => {if(list.id ===infoModal.id) INDEX_DEL = index})
+            List_Orders.splice(INDEX_DEL, 1);
+        }
+
+        //Save to LocalStorage
+        if(localStorage.getItem('List_Orders') !== null && List_Orders) localStorage.setItem('List_Orders', JSON.stringify(List_Orders));
     }
 
     return (

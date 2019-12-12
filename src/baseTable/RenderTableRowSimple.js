@@ -1,7 +1,7 @@
 import React, {useContext} from 'react';
 import ModalContext from "./ModalContext";
 import Order from "./RenderTableOrder";
-import { return_TIME_PRICE_ } from './Fuctions';
+import {return_TIME_PRICE_} from './Fuctions';
 
 function RenderTableRowSimple({worker, Time_Minutes_Body, groupS }) {
     const { ShowModal, List_Menu } = useContext(ModalContext);
