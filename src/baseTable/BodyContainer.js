@@ -2,22 +2,23 @@ import React, {useState}from 'react';
 import moment from 'moment';
 import ModalContext from "./ModalContext";
 import {Container, Row, Col} from 'react-bootstrap';
-import RenderDataPagination from './paginatorDate';
-import RenderTable from './RenderTable';
-import ModalWindow from "../modalWindow/modal_window";
-import Specialists_list from "./Specialists";
+import RenderDataPagination from './PaginatorDate/PaginatorDate';
+import RenderTable from './RenderTable/RenderTable';
+import ModalWindow from "../modalWindow/WindowModal";
+import SpecialistsList from "./Specialists/Specialists";
 
+//Get Info from JSON
 import Specialists_JSON from '../DB/Specialists';    // All Specialists
 import List_Menu_JSON from '../DB/List_Menu';        // List menus for Orders
 import List_Orders_JSON from '../DB/List_Orders';    // List Orders
-
+//Push Info to LocalHost
 if(localStorage.getItem('Specialists') === null) localStorage.setItem('Specialists', JSON.stringify(Specialists_JSON));
 if(localStorage.getItem('List_Menu') === null) localStorage.setItem('List_Menu', JSON.stringify(List_Menu_JSON));
 if(localStorage.getItem('List_Orders') === null) localStorage.setItem('List_Orders', JSON.stringify(List_Orders_JSON));
-
+//Get Info from LocalHost
 const Specialists = JSON.parse(localStorage.getItem("Specialists"));
 const List_Menu = JSON.parse(localStorage.getItem("List_Menu"));
-let List_Orders = JSON.parse(localStorage.getItem("List_Orders"));
+const List_Orders = JSON.parse(localStorage.getItem("List_Orders"));
 
 const TimeBorderTable = {
     start:510, //Begin timetable in minutes
@@ -25,12 +26,12 @@ const TimeBorderTable = {
     step:30    //Step of time in minutes
 }; // From 9:00 to 18:00
 
-function BaseTable() {
+const BaseTable = () => {
     const [modalBox, setModalBox] = useState(false); //Open Modal
     const [infoModal, setInfoModal] = useState();
 
 
-    function ShowModal( showmodal, Order, worker) {
+    const ShowModal = ( showmodal, Order, worker) => {
         if(typeof(Order) === 'object') setInfoModal(infoModal => Order);
         else{
             if(worker && typeof(worker) === 'number'){
@@ -67,7 +68,7 @@ function BaseTable() {
                         />
                     </Col>
                     <Col xs={3} className='FixLeft'>
-                        <Specialists_list />
+                        <SpecialistsList />
                     </Col>
                     <Col xs={9} className='FixRight'>
                         <RenderTable />

@@ -1,22 +1,11 @@
 import React, {useContext, useState} from "react";
-import { IoIosAdd, IoIosClose } from 'react-icons/io';
+import { IoIosAdd } from 'react-icons/io';
 import {ListGroup} from "react-bootstrap";
-import ModalContext from "../baseTable/ModalContext";
-import {Sorting_ListOrders} from "../baseTable/Fuctions";
+import ModalContext from "../../baseTable/ModalContext";
+import {Sorting_ListOrders} from "../../baseTable/Fuctions";
+import './AddNewProductsModal.css'
+
 const styles = {
-    addIcon:{
-        background: '#FFFFFF',
-        border: '1px solid #D9D9D9',
-        width:'28px',
-        height:'28px',
-        borderRadius:'1em',
-        float:'left',
-        marginRight:'1em',
-        boxShadow: '0px 1px 3px rgba(168, 168, 168, 0.21691)'
-    },
-    addGoods:{
-        cursor:'pointer'
-    },
     openServices:{
         border: '1px solid #8D43FF',
         boxShadow: '0 2px 11px rgba(82, 66, 108, 0.157665)',
@@ -24,17 +13,17 @@ const styles = {
     }
 }
 
-function AddNewProduct() {
+const AddNewProductsModal = () => {
     const [dropdownMenus, setDropdownMenus] = useState(false);
     const {List_Menu, infoModal, setInfoModal, List_Orders} = useContext(ModalContext);
     const [openServices, setOpenServices] = useState({})
     //Open ListMenu and change Styles
-    function ShowDropDownProduct(Show){
+    const ShowDropDownProduct = (Show) => {
         setDropdownMenus(Show);
         setOpenServices(styles.openServices);
-    }
+    };
     //Add New products
-    function AddProducts(Product, disable){
+    const AddProducts = (Product, disable) => {
         setDropdownMenus(false);    //Close Menus
         setOpenServices({});        //Css remove on menus
         if(!disable && Product) {
@@ -53,22 +42,22 @@ function AddNewProduct() {
             //Save to LocalStorage
             if(localStorage.getItem('List_Orders') !== null && List_Orders && !flag) localStorage.setItem('List_Orders', JSON.stringify(List_Orders));
         }
-    }
+    };
 
     let New_List_Menu = JSON.parse(JSON.stringify(List_Menu)); //Cloning List_Menu
     //Default NewList Disabled
     New_List_Menu.forEach(NewList => NewList['disable'] = false);
     //Change NewList to Disabled
     infoModal.id_menu.forEach(IDMenu => {
-        New_List_Menu.map(NewList => {if(IDMenu === NewList.id) NewList['disable'] = true})
+        New_List_Menu.forEach(NewList => {if(IDMenu === NewList.id) NewList['disable'] = true})
     });
 
     return (
         <div className='New_Products' style={openServices}>
             {!dropdownMenus? (
-                <div className="Add_services" style={styles.addGoods} onClick={ShowDropDownProduct.bind(null, true)}>
-                    <IoIosAdd style={styles.addIcon} />
-                    <span>Add goods or services</span>
+                <div className="Add_services" onClick={ShowDropDownProduct.bind(null, true)}>
+                    <IoIosAdd className='addIcon' />
+                    <span className='AddGoodSpan'>Add goods or services</span>
                 </div>
             ):(
                 <ListGroup className='Menu_List_Name_value' variant='flush'>
@@ -89,12 +78,9 @@ function AddNewProduct() {
                     )}
 
                 </ListGroup>
-            )
-            }
+            )}
         </div>
-
-
     )
-}
+};
 
-export default AddNewProduct
+export default AddNewProductsModal

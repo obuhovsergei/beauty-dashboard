@@ -2,18 +2,18 @@ import React from "react";
 import moment from "moment";
 import {Pagination} from "react-bootstrap";
 
-function Time_Now() {
-    const m = moment(new Date()).add(-10, 'hour');
-    return m.hour()*60 + m.minute()
-}
+//Get time Now
+const Time_Now = ( m = moment(new Date()).add(-12, 'hour') ) => m.hour()*60 + m.minute();
 
-function List_Workers_add(Specialists){
+//Add Pass names for specialists
+const List_Workers_add = (Specialists) => {
     let List_Workers = [];
     Specialists.forEach(elem => List_Workers.push(elem, {id:'pass_'+elem.id, title:''}));
     return List_Workers;
-}
+};
 
-function Generate_Paginator(StartDate, EndDate) {
+//Generate paginate list for Dates
+const Generate_Paginator = (StartDate, EndDate) => {
     const start = moment.parseZone(StartDate, 'DD MM YYYY');
     const end = moment.parseZone(EndDate, 'DD MM YYYY');
 
@@ -55,9 +55,10 @@ function Generate_Paginator(StartDate, EndDate) {
     return rows
 }
 
-function return_TIME_PRICE_(List_Menu, data) {
+//Return time, price, firstName to order
+const return_TIME_PRICE_ = (List_Menu, data) => {
     const id_menus = data.id_menu;
-    let menus = [];
+    const menus = [];
     for(let i=0; i<id_menus.length; i++){
         for(let j=0; j<List_Menu.length; j++){
             if(List_Menu[j].id === id_menus[i]) menus.push(List_Menu[j])
@@ -72,47 +73,49 @@ function return_TIME_PRICE_(List_Menu, data) {
     return {time:Time, price:Price, name_first_menu:NameFirst}
 }
 
-function Check_TIME_and_Return_Classes_( CheckTime, Payd, Status ) {
+//Return classes for orders
+const Check_TIME_and_Return_Classes_ = ( CheckTime, Payd, Status ) => {
     if(isNaN(CheckTime)) return false; //Check on Number
     //Get now minutes
     const Time_Now_Today = Time_Now();
-
     if(CheckTime <= Time_Now_Today){
-        if(!Status || Status && !Payd) return {
+        if(Status && Payd) return {
+            Time:'ClockCome',
+            Money:'moneyGreen',
+            BoxShadow:'grayShadow'
+        };
+        else return {
             DidNotCome:'DidNotCome',
             Time:'ClockNotCome',
             Money:'moneyGray',
             BoxShadow:'redShadow'
         };
-        if(Status && Payd) return {
-            Time:'ClockCome',
-            Money:'moneyGreen',
-            BoxShadow:'grayShadow'
-        }
     }
     else return {
         Time:'ClockWaitCome',
         Money:'moneyGray',
         BoxShadow:'defaultShadow'
     }
-}
+};
 
-function ChangeTotalTimePrice(getDatafromArr){
+//Get Total price and time
+const ChangeTotalTimePrice = (getDatafromArr) => {
     const TimeTot = getDatafromArr.reduce((result, num) => result + num.time, 0);
     const PriceTot = getDatafromArr.reduce((result, num) => result + num.price, 0);
-    let Arr = {price:PriceTot, time:TimeTot};
-    return Arr
-}
+    return {price:PriceTot, time:TimeTot}
+};
 
-function getTimeToMin(mins){
-    let hours = Math.trunc(mins/60);
-    let minutes = mins % 60;
+//Get time from minutes
+const getTimeToMin = (mins) => {
+    const hours = Math.trunc(mins/60);
+    const minutes = mins % 60;
     return  (hours&&minutes) ? hours + ' hour ' + minutes + ' minutes':
         (hours&&!minutes)?hours + ' hour ':
             minutes + ' minutes'
-}
+};
 
-function Return_Start_End_Times (StartMinutes, EndMinutes){
+//Return total Start and End times
+const Return_Start_End_Times = (StartMinutes, EndMinutes) => {
     if(typeof(StartMinutes) === 'number' && typeof(EndMinutes) === 'number'){
         const Start = moment().startOf('day').add(StartMinutes, 'minutes').format('HH:mm');
         const End = moment().startOf('day').add(StartMinutes + EndMinutes, 'minutes').format('HH:mm');
@@ -120,9 +123,10 @@ function Return_Start_End_Times (StartMinutes, EndMinutes){
         else return {Start:StartMinutes, End:End }
     }
     else return false
-}
+};
 
-function Sorting_ListOrders(flag, Product, List_Orders,List_Menu, infoModal) {
+//Sorting groups by flag
+const Sorting_ListOrders = (flag, Product, List_Orders,List_Menu, infoModal) => {
     const active_Menus = [];
     infoModal.id_menu.forEach(id_menu =>{
         List_Menu.forEach(order_menu =>{if(order_menu.id === id_menu) active_Menus.push(order_menu)})
@@ -144,7 +148,39 @@ function Sorting_ListOrders(flag, Product, List_Orders,List_Menu, infoModal) {
             if(arr[index+1].time_start > TotalTime){infoModal.id_menu.push(Product)}
         }
     });
-}
+};
+
+//Sorting by time_start
+const Sort_other_ListGroup = (groups) => groups.sort(function (a,b) {return a.time_start < b.time_start ? -1 : 1}).reduce(function(groups, el){
+        if(!groups.length || groups[groups.length - 1].id !== el.time_start) groups.push(el)
+        return groups
+    }, []);
+
+//Sorting by ID's and ++ menu values
+const ValueOfMenus = (Menus) => {
+    //Count repeat ID's
+    const CountOfMenus = Menus.reduce(function (item, i) {
+        if (!item.hasOwnProperty(i.id)) item[i.id] = 0;
+        item[i.id]++;
+        return item;
+    }, {});
+
+    let NewMenus = Menus.slice();
+    NewMenus.forEach((menu, index) => {
+        for(let count in CountOfMenus){
+            if(menu.id === Number(count) && CountOfMenus[count] > 1) {
+                NewMenus[index].value = CountOfMenus[count];
+                NewMenus[index].time = menu.timeDef * CountOfMenus[count];
+                NewMenus[index].price = menu.priceDef * CountOfMenus[count];
+            }
+        }
+    });
+    //Sort and del any copy menus
+    return NewMenus.sort(function (a,b) {return a.id < b.id ? -1 : 1}).reduce(function(NewMenus, el){
+        if(!NewMenus.length || NewMenus[NewMenus.length - 1].id !== el.id) NewMenus.push(el)
+        return NewMenus
+    }, [])
+};
 
 export {
     List_Workers_add,
@@ -155,6 +191,8 @@ export {
     ChangeTotalTimePrice,
     getTimeToMin,
     Return_Start_End_Times,
-    Sorting_ListOrders
+    Sorting_ListOrders,
+    Sort_other_ListGroup,
+    ValueOfMenus
 }
 

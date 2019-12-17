@@ -1,10 +1,10 @@
 import React, {useContext} from 'react';
-import './modal_window.css';
+import './WindowModal.css';
 import Context from './Context';
 import ModalContext from "../baseTable/ModalContext";
 import { IoIosClose } from 'react-icons/io';
-import Information_of_User from './Contacts_modal.js';
-import Order_menu_of_User from './Order_menu.js';
+import InformationOfUser from './ContactsModal/ContactsModal.js';
+import OrderMenuOfUser from './MenuBodyModal/MenuBodyModal.js';
 import { Sorting_ListOrders } from "../baseTable/Fuctions";
 
 
@@ -17,7 +17,7 @@ function ModalWindow() {
         let flag = false;
         if(toggle === 'up') Sorting_ListOrders(flag, Product, List_Orders,List_Menu, infoModal);
 
-        else List_Orders.map(infoModal => {
+        else List_Orders.forEach(infoModal => {
             if(infoModal.id === ID_List_orders){
                 for(let ID_menu in infoModal.id_menu){
                     if(infoModal.id_menu[ID_menu] === Product){
@@ -34,12 +34,13 @@ function ModalWindow() {
     function removeMenu(id) {
         const ID_List_orders = infoModal.id;
         let Arr = [];
-        List_Orders.map(infoModal => {
+        List_Orders.forEach(infoModal => {
             if(infoModal.id === ID_List_orders){
                 for(let j=0; j<infoModal.id_menu.length; j++){
                      if(infoModal.id_menu[j] !== id) Arr.push(infoModal.id_menu[j])
                 }
-        }})
+            }
+        })
         infoModal.id_menu = Arr;
         //Delete if No have any Orders
         if(!infoModal.id_menu.length){
@@ -58,10 +59,10 @@ function ModalWindow() {
                 <div className='ModalWindow-body'>
                     <div className='Close_modal'><IoIosClose onClick={ShowModal.bind(null, false)}/></div>
                     <div className="ModalWindow-left">
-                        <Information_of_User />
+                        <InformationOfUser />
                     </div>
                     <div className="ModalWindow-right">
-                        <Order_menu_of_User />
+                        <OrderMenuOfUser />
                     </div>
                 </div>
             </div>

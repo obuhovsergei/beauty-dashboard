@@ -1,0 +1,13 @@
+.Buttons_modal_save{
+    position: absolute;
+    bottom: 2rem;
+    width: 100%;
+    margin-bottom:0;
+    padding-right: 3rem;
+}
+.paddingGrid{padding: .5rem 1rem}
+.paddingGridTime{padding: .5rem .2rem}
+.btn-sm{padding: .1rem 2rem;text-transform: uppercase;border-radius: unset; font-size: 0.8em;line-height: 14px;}
+.Buttons_modal_save{margin:2em 0 0;background: #FFFFFF;}
+.reverse{padding-right:0}
+.BoldTime{font-weight:bold}

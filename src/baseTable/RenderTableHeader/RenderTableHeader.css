@@ -1,0 +1,38 @@
+.THeadPrevNow{
+    color: #8d8d8da8;
+    background: #cacaca57;
+    text-align: center;
+    font-weight: bold;
+    font-size: 0.8rem;
+}
+.THeadNow{color: #8d8d8da8;position: relative;text-align: center; font-weight: bold;font-size: 0.8rem}
+.THeadNowBack{
+    background: #cacaca57;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+}
+.LINE_timeline{
+    height: 52rem;
+    width: 1px;
+    position: absolute;
+    right: 0;
+    top: -25px;
+    background: #F05252;
+}
+.THeadNowBack span{
+    position: absolute;
+    right: -19px;
+    top: -25px;
+    color: #FFFFFF;
+    background: #F05252;
+    border-radius: 8px;
+    padding: .1rem .2rem;
+    cursor: default;
+}
+.THeadPast{
+    text-align: center;
+    font-weight: bold;
+    font-size: 0.8rem;
+}

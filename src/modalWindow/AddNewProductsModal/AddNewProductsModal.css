@@ -1,0 +1,38 @@
+.addIcon{
+    background: #FFFFFF;
+    border: 1px solid #D9D9D9;
+    width:24px;
+    height:24px;
+    border-radius:1em;
+    float:left;
+    margin-right:1em;
+    box-shadow: 0px 1px 3px rgba(168, 168, 168, 0.21691);
+}
+.Add_services{cursor:pointer;font-weight: 300;font-size: 13px;line-height: 15px; display: flex;}
+.AddGoodSpan{padding-top: .2rem;}
+.New_Products{
+    position: relative;
+    overflow-y: scroll;
+    height: 10rem;
+    z-index: 10;
+}
+.New_Products>.Menu_List_Name_value{position: absolute;width: 100%;}
+/*Beauty Scroll*/
+.New_Products::-webkit-scrollbar-track, .List_Total_Specialists::-webkit-scrollbar-track{background-color: initial;}
+.New_Products::-webkit-scrollbar, .List_Total_Specialists::-webkit-scrollbar{width: 0;background-color: #f5f5f5}
+.New_Products::-webkit-scrollbar-thumb, .List_Total_Specialists::-webkit-scrollbar-thumb{background-color: #c5bdbd;}
+
+.Add_New_Products_List{display: flex;justify-content: space-between;padding: .2rem 2rem;border: none;}
+.Add_New_Products_List:hover{cursor: pointer;background: #F1EEF7;}
+.Menu_List_Name_value>.disabled:first-child{
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: .75rem;
+    color: #212529;
+}
+.Menu_List_Name_value>.active{background: #F1EEF7;color: #000000;}
+.List_Total_Specialists{
+    position: relative;
+    overflow-y: scroll;
+    max-height: 25rem;
+}

@@ -1,0 +1,29 @@
+/*Modal Menus*/
+.Image_menus{
+    width: 1.7em;
+    padding: 0.3em;
+    background: radial-gradient(66.21% 66.21% at 50% 56.8%, #FFE7DB 0%, #FFD6C0 100%);
+    border-radius: 1em;
+    float: left;
+}
+.Name_menus{padding-top: 0.3em;float:left;padding-left: 1em;font-weight: 300;font-size: 14px;line-height: 16px;}
+.Price_menus{
+    background: #ffffffbf;
+    border-radius: 0 0 10px 10px;
+    margin:0 1.5em;
+    padding: .7em 0;
+    text-align:center;
+    font-weight: 300;
+    font-size: .7rem;
+    line-height: 13px;
+}
+.Li_menus{margin-bottom: 1.5em;}
+.Value_menus{float:right;cursor:pointer;font-size: 15px;line-height: 18px;}
+.Arrows_menus{background: #F1F1F1;
+    margin:0 .7em;
+    padding: .2rem;
+    height: 1.2rem;
+    width: 1.2rem;
+    border-radius: 1em;
+    cursor:pointer;}
+

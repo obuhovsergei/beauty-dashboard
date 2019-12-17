@@ -1,9 +1,10 @@
 import React, {useState, useEffect } from 'react';
 import moment from "moment";
-import { Time_Now } from './Fuctions';
+import { Time_Now } from '../Fuctions';
+import './RenderTableHeader.css'
 
 
-function RenderTableHeader({DataHead}) {
+const RenderTableHeader = ({DataHead}) => {
     const Time_Now_Today = Time_Now();
     const HourNow = moment().startOf('day').add(Time_Now_Today, 'minutes').format('HH');
     const MinutesNow = moment().startOf('day').add(Time_Now_Today, 'minutes').format('mm');
@@ -20,7 +21,7 @@ function RenderTableHeader({DataHead}) {
 
     return(DataHead.map(row => {
         const HourCheck = moment().startOf('day').add(row.id, 'minutes').format('HH');
-        if(Time_Now_Today > row.id && HourCheck < HourNow) return(<td key={row.id} className='THeadPrevNow' colSpan={2} style={{textAlign: 'center', fontWeight: 'bold',fontSize: '0.8rem'}}>{row.value}</td>);
+        if(Time_Now_Today > row.id && HourCheck < HourNow) return(<td key={row.id} className='THeadPrevNow' colSpan={2}>{row.value}</td>);
         else if(HourCheck === HourNow) {
             const Width_percent = Math.round(MinutesNow / 60 * 100) + '%';
             return(
@@ -32,7 +33,7 @@ function RenderTableHeader({DataHead}) {
                     </div>
                 </td>);
         }
-        else return(<td key={row.id} colSpan={2} style={{textAlign: 'center', fontWeight: 'bold',fontSize: '0.8rem'}}>{row.value}</td>)
+        else return(<td key={row.id} colSpan={2} className='THeadPast'>{row.value}</td>)
     }))
 }
 

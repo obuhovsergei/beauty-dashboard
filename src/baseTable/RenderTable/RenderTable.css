@@ -1,0 +1,16 @@
+/*Classes for Table*/
+.table-striped thead tr{background-color: #F2F2F2;}
+.table-striped tbody tr:nth-of-type(odd){background-color: #FFFFFF;}
+.table-striped tbody tr:nth-of-type(even){background: #F2F2F2}
+.table-striped tbody tr:nth-of-type(even) td:hover{border:none;background: initial;cursor:default}
+
+.TableData{
+    margin-top: 2em;
+    margin-bottom: 0;
+    background: inherit;
+    mix-blend-mode: normal;
+    width: 110rem;
+}
+.TableData td{border-left: 1px dashed #c5bdbd;border-right: 1px dashed #c5bdbd;}
+.table td, .table th{border-top: none}
+.TheadTable{font-style: normal;font-weight: bold;width: 75px;}

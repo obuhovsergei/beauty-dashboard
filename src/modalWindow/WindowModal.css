@@ -1,0 +1,42 @@
+/*Classes for Modal*/
+.ModalWindow {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  background: rgba(45, 58, 93, 0.144814);
+  backdrop-filter: blur(8.15485px);
+  justify-content: center;
+  display: flex;
+  box-shadow: 0px 2px 70px rgba(0, 0, 0, 0.0904665);
+}
+.ModalWindow-body{
+  padding: 0;
+  width: 80%;
+  background: #fff;
+  height: 700px;
+  margin: auto 0;
+  border-radius: 10px;
+  overflow: hidden;
+}
+.Close_modal{
+  position: relative;
+  padding: 1em;
+  float: right;
+  margin-left: -100px;
+  z-index: 2;
+}
+.Close_modal svg:hover{cursor:pointer}
+.Close_modal svg{height: 2em;width: 2em;}
+.ModalWindow-left {float: left;width: 30%;height: 100%;}
+.ModalWindow-right {float: left;width: 70%;height: 100%;border-radius: 10px;}
+
+
+.Menu_List_Name_value{
+  padding: 1em;
+  background: #FFFFFF;
+  box-shadow: 0px 2px 11px rgba(56, 62, 68, 0.0862772);
+  border-radius: 4px;
+}
+

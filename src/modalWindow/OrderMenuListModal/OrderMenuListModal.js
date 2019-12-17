@@ -1,13 +1,13 @@
 import React, { useContext } from "react";
 import { Row, Col, Image } from 'react-bootstrap';
-import Scissors from '../img/Sclssors.png';
+import Scissors from '../../img/Sclssors.png';
 import PropTypes from 'prop-types';
-import Context from "./Context";
+import Context from "../Context";
 import { IoIosTrash, IoIosArrowBack, IoIosArrowForward} from 'react-icons/io';
-import { getTimeToMin } from "../baseTable/Fuctions";
+import { getTimeToMin } from "../../baseTable/Fuctions";
+import './OrderMenuListModal.css'
 
-
-function Menu_List({ menu }){
+const Menu_List = ({ menu }) => {
     const { removeMenu, toggleMenu } = useContext(Context);
 
     return (
@@ -41,7 +41,7 @@ function Menu_List({ menu }){
                 </span>
             </div>
         </li>)
-}
+};
 
 Menu_List.propTypes = {
     menu:PropTypes.object.isRequired

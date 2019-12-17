@@ -1,15 +1,15 @@
 import React, {useContext, useState} from "react";
 import {Button, Form, Row, Col, Dropdown, DropdownButton} from 'react-bootstrap';
-import ModalContext from "../baseTable/ModalContext";
+import ModalContext from "../../baseTable/ModalContext";
+import './ContactsModal.css'
 
-
-function Information_of_User()  {
+const Information_of_User = () => {
     const { infoModal, setInfoModal, List_Orders, ShowModal} = useContext(ModalContext);
     const [name, setName] = useState(infoModal.name);
     const [telephone, setTelephone] = useState(infoModal.telephone);
     const [comments, setComments] = useState(infoModal.comments);
 
-    function Change_Status(evt){
+    const Change_Status = (evt) => {
         let status = true;
         if('false' === evt) status = false;
         if(infoModal.id_menu.length){
@@ -18,16 +18,16 @@ function Information_of_User()  {
             //Save to LocalStorage
             if(localStorage.getItem('List_Orders') !== null && List_Orders) localStorage.setItem('List_Orders', JSON.stringify(List_Orders));
         }
-    }
+    };
 
-    function handleChange(e) {
+    const handleChange = (e) => {
         (e.target.name === 'Name client')? setName(e.target.value)
             :(e.target.name === 'Telephone')? setTelephone(e.target.value)
             :(e.target.name === 'Comments') ? setComments(e.target.value)
             : console.log('Выход')
-    }
-    function SaveContacts() {
-        if(name, telephone && infoModal.id_menu.length){
+    };
+    const SaveContacts = () => {
+        if(name && telephone && infoModal.id_menu.length){
             infoModal.name = name;
             infoModal.telephone = telephone;
             infoModal.comments = comments;
@@ -36,7 +36,7 @@ function Information_of_User()  {
             if(localStorage.getItem('List_Orders') !== null && List_Orders) localStorage.setItem('List_Orders', JSON.stringify(List_Orders));
             ShowModal(false);
         }
-    }
+    };
 
 
     return (

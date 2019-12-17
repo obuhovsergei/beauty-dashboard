@@ -1,10 +1,11 @@
 import React, {useContext} from 'react';
 import {ListGroup, Image} from 'react-bootstrap';
-import Spec from '../img/Spec.jpg';
-import { List_Workers_add }  from './Fuctions';
-import ModalContext from "./ModalContext";
+import Spec from '../../img/Spec.jpg';
+import { List_Workers_add }  from '../Fuctions';
+import ModalContext from "../ModalContext";
+import './Specialists.css'
 
-function Specialists_list() {
+const SpecialistsList = () => {
     const { Specialists } = useContext(ModalContext);
     const List_Workers_add_pass = List_Workers_add(Specialists);
     return (
@@ -13,7 +14,7 @@ function Specialists_list() {
                 if(typeof (List.id) === 'number'){
                     return (<ListGroup.Item key={List.id} className='d-flex justify-content-start align-content-center'>
                         <span className='paddingGridTime'>
-                            <Image src={Spec} style={{width:'2.3rem', marginTop: '.3rem'}} roundedCircle={true}/>
+                            <Image src={Spec} className='ImageSpecialist' roundedCircle={true}/>
                         </span>
                         <div className='paddingGridTime'>
                             <span>{List.title}</span>
@@ -21,10 +22,10 @@ function Specialists_list() {
                         </div>
                     </ListGroup.Item>)
                 }
-                else return (<ListGroup.Item key={List.id} ></ListGroup.Item>)
+                else return (<ListGroup.Item key={List.id} > </ListGroup.Item>)
             })}
         </ListGroup>
     )
 }
 
-export default Specialists_list
+export default SpecialistsList
