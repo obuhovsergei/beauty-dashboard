@@ -7,7 +7,6 @@ import update from "immutability-helper";
 const RenderTableWorkerTr = ({worker, Time_Minutes_Body}) => {
     const { List_Menu, List_Orders } = useContext(ModalContext);
     const groupS = List_Orders.filter(list_workers => list_workers.group === worker.id);
-
     const [groups, setGroups] = useState(groupS);
 
     const moveGroups = useCallback(
@@ -55,13 +54,13 @@ const RenderTableWorkerTr = ({worker, Time_Minutes_Body}) => {
 
                 //Get first Group of hoverDrag
                 const hoverGroup_ = Sorted_otherGroup.find(item => {
-                    if(item.time_start > hoverObject && item.time_start !== dragObject) return item
+                    if(item.time_start > hoverObject && item.time_start !== dragObject) return item;
                     else return false
                 });
                 //if next order have next groups
                 if(hoverGroup_ && Total_TIME_otherGroup > hoverGroup_.time_start) {
                     //Get other groups after hoverObject
-                    const hoverAllGroups = Sorted_otherGroup.filter(item => item.time_start > hoverObject)
+                    const hoverAllGroups = Sorted_otherGroup.filter(item => item.time_start > hoverObject);
                     //Get time to splice other groups
                     let timeSplice = Total_TIME_dragGroup.time - (hoverGroup_.time_start - hoverObject);
                     const endOfTimeSplice = timeSplice%30; //If % lost
@@ -124,6 +123,6 @@ const RenderTableWorkerTr = ({worker, Time_Minutes_Body}) => {
         }
         </tr>
     )
-}
+};
 
 export default RenderTableWorkerTr

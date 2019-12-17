@@ -15,10 +15,10 @@ const Order = ({groupS, id, moveGroups, index, worker, nameGroup}) => {
     const ref = useRef(null);
     const [, drop] = useDrop({
         accept: ItemTypes.CARD,
-        hover(item, monitor) {
-            if (!ref.current) return
-            const dragIndex = item.index
-            const hoverIndex = index
+        hover(item) {
+            if (!ref.current) return;
+            const dragIndex = item.index;
+            const hoverIndex = index;
             if (dragIndex === hoverIndex) return;
             moveGroups(dragIndex, hoverIndex); //Moving Orders
             item.index = hoverIndex
@@ -29,11 +29,10 @@ const Order = ({groupS, id, moveGroups, index, worker, nameGroup}) => {
         item: { type: ItemTypes.CARD, id, index, worker, nameGroup},
         collect: monitor => ({
             isDragging: monitor.isDragging(),
-
         }),
-        canDrag: monitor => (!isNaN(worker) && nameGroup),
+        canDrag: () => (!isNaN(worker) && nameGroup),
     });
-    const opacity = isDragging ? 0 : 1
+    const opacity = isDragging ? 0 : 1;
     drag(drop(ref));
 
     let time_Classes = {}; //Classes of orders
@@ -41,7 +40,7 @@ const Order = ({groupS, id, moveGroups, index, worker, nameGroup}) => {
     /*useEffect(() => {
         let orderNew = null;
         orderNew = setInterval(() => {
-            setTime_Classes(time_Classes => Check_TIME_and_Return_Classes_(groupS.time_start + TIME_PRICE.time, groupS.payd , groupS.status));
+            time_Classes = Check_TIME_and_Return_Classes_(groupS.time_start + TIME_PRICE.time, groupS.payd , groupS.status);
         }, 1000);
         return () => clearInterval(orderNew);
     });*/
@@ -88,6 +87,6 @@ const Order = ({groupS, id, moveGroups, index, worker, nameGroup}) => {
         ) //default Data
     }
 
-}
+};
 
 export default Order
