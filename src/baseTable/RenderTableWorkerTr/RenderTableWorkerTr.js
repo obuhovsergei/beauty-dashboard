@@ -58,9 +58,20 @@ const RenderTableWorkerTr = ({worker, Time_Minutes_Body}) => {
                     if(item.time_start > hoverObject && item.time_start !== dragObject) return item
                     else return false
                 });
-
-                //Check time_start next order
-                if(Total_TIME_otherGroup <= hoverGroup_.time_start && drag.group === hoverGroup_.group){
+                //if next order have next groups
+                if(hoverGroup_ && Total_TIME_otherGroup > hoverGroup_.time_start) {
+                    //Get other groups after hoverObject
+                    const hoverAllGroups = Sorted_otherGroup.filter(item => item.time_start > hoverObject)
+                    //Get time to splice other groups
+                    let timeSplice = Total_TIME_dragGroup.time - (hoverGroup_.time_start - hoverObject);
+                    const endOfTimeSplice = timeSplice%30; //If % lost
+                    if(endOfTimeSplice != null) timeSplice = timeSplice + endOfTimeSplice;
+                    //Add time to other groups
+                    hoverAllGroups.map(group => group.time_start += timeSplice);
+                    setGroups(groups); //???
+                }
+                //if not have any groups
+                else {
                     drag.time_start = hoverObject;
                     const dragIndex_ = groups.findIndex(item => item.time_start === hoverObject);
                     setGroups(
@@ -71,18 +82,6 @@ const RenderTableWorkerTr = ({worker, Time_Minutes_Body}) => {
                             ]
                         })
                     )
-                }
-                //if next order have many times
-                else {
-                    //Get other groups after hoverObject
-                    const hoverAllGroups = Sorted_otherGroup.filter(item => item.time_start > hoverObject)
-                    //Get time to splice other groups
-                    let timeSplice = Total_TIME_dragGroup.time - (hoverGroup_.time_start - hoverObject);
-                    const endOfTimeSplice = timeSplice%30; //If % lost
-                    if(endOfTimeSplice != null) timeSplice = timeSplice + endOfTimeSplice;
-                    //Add time to other groups
-                    hoverAllGroups.map(group => group.time_start += timeSplice);
-                    setGroups(groups); //???
                 }
             }
         },

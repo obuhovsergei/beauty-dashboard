@@ -20,7 +20,6 @@ const Order = ({groupS, id, moveGroups, index, worker, nameGroup}) => {
             const dragIndex = item.index
             const hoverIndex = index
             if (dragIndex === hoverIndex) return;
-
             moveGroups(dragIndex, hoverIndex); //Moving Orders
             item.index = hoverIndex
 
