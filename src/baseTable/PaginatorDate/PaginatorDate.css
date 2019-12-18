@@ -2,17 +2,26 @@
 .Pagination_date{margin-top: 3rem;}
 .Pagination_date>li>a{background: #FFFFFF;}
 .Pagination_date::-webkit-scrollbar { display: none;}
-.Pagination_date a.page-link{border:none;font-weight: bold;color: #000000;padding: .5rem 1.37rem}
+.Pagination_date a.page-link{
+    border:none;
+    font-weight: bold;
+    font-size: 15px;
+    line-height: 18px;
+    color: #000000;
+    padding: .5rem 1.37rem}
 .Pagination_date li.active>.page-link{
     padding: .5rem 1.37rem;
     background: #8D43FF;
+    font-size: 15px;
+    font-weight: bold;
+    line-height: 18px;
     border:none;
     cursor: pointer;
 }
 .page-item.active .page-link{z-index: 0;}
 .Pagination_date a.page-link span, .Pagination_date li.active span.page-link span:first-child {
-    bottom: 50px;
-    left: 20px;
+    bottom: 45px;
+    left: 23px;
     text-transform: uppercase;
     position: absolute;
     color: #B0B0B0;
@@ -20,4 +29,4 @@
 }
 .disabled_pagin>a{color: #C3C6CA!important;cursor: default;}
 .disabled_pagin>a:hover{background: #FFFFFF;}
-.DayOf{ font-size :.9rem}
+.DayOf{font-size: 11px;line-height: 13px;}

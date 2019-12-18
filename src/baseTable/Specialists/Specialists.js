@@ -8,6 +8,7 @@ import './Specialists.css'
 const SpecialistsList = () => {
     const { Specialists } = useContext(ModalContext);
     const List_Workers_add_pass = List_Workers_add(Specialists);
+
     return (
         <ListGroup className='List_Specialsts' variant='flush'>
             {List_Workers_add_pass.map(List =>{
@@ -26,6 +27,6 @@ const SpecialistsList = () => {
             })}
         </ListGroup>
     )
-}
+};
 
 export default SpecialistsList

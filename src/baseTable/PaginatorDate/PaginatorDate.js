@@ -4,12 +4,13 @@ import moment from 'moment';
 import './PaginatorDate.css';
 import { Generate_Paginator } from '../Fuctions';
 
-//Исправление косяка moment
+//Bug fix moment
 moment.fn.fromNow = function () {return moment().diff(this, 'days')};
 
 
 const DatePagination = ({StartDate, EndDate}) => {
     const rows = Generate_Paginator(StartDate, EndDate);
+
     return(
         <Pagination className='Pagination_date'>
             {rows.map(row => {
@@ -21,6 +22,6 @@ const DatePagination = ({StartDate, EndDate}) => {
                 )})
             }
         </Pagination> )
-}
+};
 
 export default DatePagination

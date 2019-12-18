@@ -6,7 +6,7 @@ import update from "immutability-helper";
 
 const RenderTableWorkerTr = ({worker, Time_Minutes_Body}) => {
     const { List_Menu, List_Orders } = useContext(ModalContext);
-    const groupS = List_Orders.filter(list_workers => list_workers.group === worker.id);
+    const groupS = List_Orders.filter(list_workers => list_workers.group === worker.id); //Filtering groups on active specialist
     const [groups, setGroups] = useState(groupS);
 
     const moveGroups = useCallback(
@@ -57,6 +57,7 @@ const RenderTableWorkerTr = ({worker, Time_Minutes_Body}) => {
                     if(item.time_start > hoverObject && item.time_start !== dragObject) return item;
                     else return false
                 });
+
                 //if next order have next groups
                 if(hoverGroup_ && Total_TIME_otherGroup > hoverGroup_.time_start) {
                     //Get other groups after hoverObject

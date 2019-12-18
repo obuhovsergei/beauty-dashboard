@@ -3,7 +3,7 @@ import moment from "moment";
 import {Pagination} from "react-bootstrap";
 
 //Get time Now
-const Time_Now = ( m = moment(new Date()).add(-12, 'hour') ) => m.hour()*60 + m.minute();
+const Time_Now = ( m = moment(new Date()) ) => m.hour()*60 + m.minute();
 
 //Add Pass names for specialists
 const List_Workers_add = (Specialists) => {
@@ -30,10 +30,10 @@ const Generate_Paginator = (StartDate, EndDate) => {
         const Month = moment().subtract(i, 'days').format('MMM');
         k=++k;
         if(dd === '01'){
-            rows.push({id:Month, d:Month, disable: 'disabled_pagin'})
+            rows.push({id:Month, d:Month, disable: 'disabled_pagin'});
             rows.push({id:k, d:dd, dayOf:dayOf})
         }
-        else if(dayOf === 'Sa' || dayOf === 'Su') rows.push({id:k, d:dd, disable: 'disabled_pagin', dayOf:dayOf})
+        else if(dayOf === 'Sa' || dayOf === 'Su') rows.push({id:k, d:dd, disable: 'disabled_pagin', dayOf:dayOf});
         else rows.push({id:k, d:dd, dayOf:dayOf});
     }
 
@@ -44,16 +44,16 @@ const Generate_Paginator = (StartDate, EndDate) => {
         const Month = check.format('MMM');
         k=++k;
         if(dd === '01'){
-            rows.push({id:Month, d:Month, disable: 'disabled_padin'})
+            rows.push({id:Month, d:Month, disable: 'disabled_padin'});
             rows.push({id:k, d:dd, dayOf:dayOf})
         }
-        else if (check.isSame(moment())) rows.push({id:k, d:dd, active: true, dayOf:dayOf})
-        else if(dayOf === 'Sa' || dayOf === 'Su') rows.push({id:k, d:dd, disable: 'disabled_pagin', dayOf:dayOf})
+        else if (check.isSame(moment())) rows.push({id:k, d:dd, active: true, dayOf:dayOf});
+        else if(dayOf === 'Sa' || dayOf === 'Su') rows.push({id:k, d:dd, disable: 'disabled_pagin', dayOf:dayOf});
         else rows.push({id:k, d:dd, dayOf:dayOf})
     }
 
     return rows
-}
+};
 
 //Return time, price, firstName to order
 const return_TIME_PRICE_ = (List_Menu, data) => {
@@ -71,7 +71,7 @@ const return_TIME_PRICE_ = (List_Menu, data) => {
     const Time = menus.reduce((result, num) => result + num.time, 0);
     const Price = menus.reduce((result, num) => result + num.price, 0);
     return {time:Time, price:Price, name_first_menu:NameFirst}
-}
+};
 
 //Return classes for orders
 const Check_TIME_and_Return_Classes_ = ( CheckTime, Payd, Status ) => {
@@ -119,7 +119,7 @@ const Return_Start_End_Times = (StartMinutes, EndMinutes) => {
     if(typeof(StartMinutes) === 'number' && typeof(EndMinutes) === 'number'){
         const Start = moment().startOf('day').add(StartMinutes, 'minutes').format('HH:mm');
         const End = moment().startOf('day').add(StartMinutes + EndMinutes, 'minutes').format('HH:mm');
-        if(StartMinutes > 1) return {Start:Start, End:End }
+        if(StartMinutes > 1) return {Start:Start, End:End };
         else return {Start:StartMinutes, End:End }
     }
     else return false
@@ -139,7 +139,7 @@ const Sorting_ListOrders = (flag, Product, List_Orders,List_Menu, infoModal) => 
     const Filtered_List_Orders = List_Orders.filter(list => list.group === infoModal.group);
     //Sort and del any copy menus
     const sorting_List_Orders = Filtered_List_Orders.sort(function (a,b) {return a.time_start < b.time_start ? -1 : 1}).reduce(function(Filtered_List_Orders, el){
-        if(!Filtered_List_Orders.length || Filtered_List_Orders[Filtered_List_Orders.length - 1].id !== el.time_start) Filtered_List_Orders.push(el)
+        if(!Filtered_List_Orders.length || Filtered_List_Orders[Filtered_List_Orders.length - 1].id !== el.time_start) Filtered_List_Orders.push(el);
         return Filtered_List_Orders
     }, []);
     //Sort to Time_start
@@ -152,7 +152,7 @@ const Sorting_ListOrders = (flag, Product, List_Orders,List_Menu, infoModal) => 
 
 //Sorting by time_start
 const Sort_other_ListGroup = (groups) => groups.sort(function (a,b) {return a.time_start < b.time_start ? -1 : 1}).reduce(function(groups, el){
-        if(!groups.length || groups[groups.length - 1].id !== el.time_start) groups.push(el)
+        if(!groups.length || groups[groups.length - 1].id !== el.time_start) groups.push(el);
         return groups
     }, []);
 
@@ -177,7 +177,7 @@ const ValueOfMenus = (Menus) => {
     });
     //Sort and del any copy menus
     return NewMenus.sort(function (a,b) {return a.id < b.id ? -1 : 1}).reduce(function(NewMenus, el){
-        if(!NewMenus.length || NewMenus[NewMenus.length - 1].id !== el.id) NewMenus.push(el)
+        if(!NewMenus.length || NewMenus[NewMenus.length - 1].id !== el.id) NewMenus.push(el);
         return NewMenus
     }, [])
 };

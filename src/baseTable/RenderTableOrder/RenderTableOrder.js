@@ -11,7 +11,7 @@ const ItemTypes = {
 };
 
 const Order = ({groupS, id, moveGroups, index, worker, nameGroup}) => {
-    const { ShowModal, List_Menu } = useContext(ModalContext);
+    const { ShowModal, List_Menu, List_Orders } = useContext(ModalContext);
     const ref = useRef(null);
     const [, drop] = useDrop({
         accept: ItemTypes.CARD,
@@ -22,8 +22,8 @@ const Order = ({groupS, id, moveGroups, index, worker, nameGroup}) => {
             if (dragIndex === hoverIndex) return;
             moveGroups(dragIndex, hoverIndex); //Moving Orders
             item.index = hoverIndex
+        },
 
-        }
     });
     const [{ isDragging }, drag] = useDrag({
         item: { type: ItemTypes.CARD, id, index, worker, nameGroup},
@@ -31,6 +31,10 @@ const Order = ({groupS, id, moveGroups, index, worker, nameGroup}) => {
             isDragging: monitor.isDragging(),
         }),
         canDrag: () => (!isNaN(worker) && nameGroup),
+        end:(item, monitor) => {
+            //Save to LocalStorage
+            if(monitor.didDrop() && localStorage.getItem('List_Orders') !== null && List_Orders) localStorage.setItem('List_Orders', JSON.stringify(List_Orders));
+        }
     });
     const opacity = isDragging ? 0 : 1;
     drag(drop(ref));
@@ -57,8 +61,7 @@ const Order = ({groupS, id, moveGroups, index, worker, nameGroup}) => {
             <div ref={ref}
                  className={time_Classes.BoxShadow + ' InitData_in_Table'}
                  style={{width:Width_percent, opacity}}
-                 onClick={ShowModal.bind(null, true, groupS)}
-            >
+                 onClick={ShowModal.bind(null, true, groupS)}>
                 <span>
                     <strong className={time_Classes.Time}>
                         <IoMdTime/>
@@ -77,14 +80,21 @@ const Order = ({groupS, id, moveGroups, index, worker, nameGroup}) => {
         </td>)
     }
     else {
-        return (
+        if(isNaN(worker)) return (
+            <td
+                onClick={ShowModal.bind(null, true, id, worker)}
+                key={id}
+                className='DefaultBox'
+            > </td>
+        ); //default Data no REFS
+        else return (
             <td
                 ref={ref}
                 onClick={ShowModal.bind(null, true, id, worker)}
                 key={id}
                 className='DefaultBox'
             > </td>
-        ) //default Data
+        ) //default Data have REFS
     }
 
 };
