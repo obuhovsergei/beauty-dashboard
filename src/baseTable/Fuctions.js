@@ -3,12 +3,15 @@ import moment from "moment";
 import {Pagination} from "react-bootstrap";
 
 //Get time Now
-const Time_Now = ( m = moment(new Date()) ) => m.hour()*60 + m.minute();
+const Time_Now = ( m = moment(new Date()).add(-11, 'hour').add(58, 'minutes') ) => m.hour()*60 + m.minute();
 
 //Add Pass names for specialists
-const List_Workers_add = (Specialists) => {
+const List_Workers_add = (Specialists, Height) => {
     let List_Workers = [];
-    Specialists.forEach(elem => List_Workers.push(elem, {id:'pass_'+elem.id, title:''}));
+    Specialists.forEach((elem, index) => {
+        elem['height'] = Height[index].value;
+        List_Workers.push(elem, {id:'pass_'+elem.id, title:''})
+    });
     return List_Workers;
 };
 
@@ -57,6 +60,7 @@ const Generate_Paginator = (StartDate, EndDate) => {
 
 //Return time, price, firstName to order
 const return_TIME_PRICE_ = (List_Menu, data) => {
+    if(!data) return false;
     const id_menus = data.id_menu;
     const menus = [];
     for(let i=0; i<id_menus.length; i++){
@@ -70,11 +74,14 @@ const return_TIME_PRICE_ = (List_Menu, data) => {
     }
     const Time = menus.reduce((result, num) => result + num.time, 0);
     const Price = menus.reduce((result, num) => result + num.price, 0);
-    return {time:Time, price:Price, name_first_menu:NameFirst}
+    const ColSpan = Math.ceil(Time/30);
+    const Width_percent = Math.round((Time/30) / ColSpan * 100) + '%';
+    return {time:Time, price:Price, name_first_menu:NameFirst, ColSpan:ColSpan, Width_percent: Width_percent}
 };
 
 //Return classes for orders
 const Check_TIME_and_Return_Classes_ = ( CheckTime, Payd, Status ) => {
+    //console.log(CheckTime, Payd, Status);
     if(isNaN(CheckTime)) return false; //Check on Number
     //Get now minutes
     const Time_Now_Today = Time_Now();
@@ -177,7 +184,7 @@ const ValueOfMenus = (Menus) => {
     });
     //Sort and del any copy menus
     return NewMenus.sort(function (a,b) {return a.id < b.id ? -1 : 1}).reduce(function(NewMenus, el){
-        if(!NewMenus.length || NewMenus[NewMenus.length - 1].id !== el.id) NewMenus.push(el);
+        if(!NewMenus.length || NewMenus[NewMenus.length - 1].id !== el.id) NewMenus.push(el)
         return NewMenus
     }, [])
 };

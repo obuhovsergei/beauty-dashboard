@@ -6,33 +6,28 @@ import RenderDataPagination from './PaginatorDate/PaginatorDate';
 import RenderTable from './RenderTable/RenderTable';
 import ModalWindow from "../modalWindow/WindowModal";
 import SpecialistsList from "./Specialists/Specialists";
-
-//Get Info from JSON
-import Specialists_JSON from '../DB/Specialists';    // All Specialists
-import List_Menu_JSON from '../DB/List_Menu';        // List menus for Orders
-import List_Orders_JSON from '../DB/List_Orders';    // List Orders
-//Push Info to LocalHost
-if(localStorage.getItem('Specialists') === null) localStorage.setItem('Specialists', JSON.stringify(Specialists_JSON));
-if(localStorage.getItem('List_Menu') === null) localStorage.setItem('List_Menu', JSON.stringify(List_Menu_JSON));
-if(localStorage.getItem('List_Orders') === null) localStorage.setItem('List_Orders', JSON.stringify(List_Orders_JSON));
-//Get Info from LocalHost
-const Specialists = JSON.parse(localStorage.getItem("Specialists"));
-const List_Menu = JSON.parse(localStorage.getItem("List_Menu"));
-const List_Orders = JSON.parse(localStorage.getItem("List_Orders"));
+import { Specialists, List_Menu, List_Orders } from './GetJSON';
 
 const TimeBorderTable = {
-    start:510, //Begin timetable in minutes
-    end:1020,  //End timetable in minutes
-    step:30    //Step of time in minutes
+    start:510,  //Begin timetable in minutes
+    end:1020,   //End timetable in minutes
+    step:30,    //Step of time in minutes
+    endDate: 14 //End Date to paginator
 }; // From 9:00 to 18:00
 
 const BaseTable = () => {
     const [modalBox, setModalBox] = useState(false); //Open Modal
-    const [infoModal, setInfoModal] = useState();
-
+    const [infoModal, setInfoModal] = useState({});
+    const [height, setHeight] = useState([
+        {class:'TR1', value:82},
+        {class:'TR2', value:82},
+        {class:'TR3', value:82},
+        {class:'TR4', value:82},
+        {class:'TR5', value:82}
+    ]);
 
     const ShowModal = ( showmodal, Order, worker) => {
-        if(typeof(Order) === 'object') setInfoModal(infoModal => Order);
+        if(typeof(Order) === 'object') setInfoModal(() => Order);
         else{
             if(worker && typeof(worker) === 'number'){
                 const defaultINFO = {
@@ -49,26 +44,26 @@ const BaseTable = () => {
                 }; //Default information if click on NON order
                 defaultINFO.time_start = Order;
                 defaultINFO.group = worker;
-                setInfoModal(infoModal => defaultINFO);
+                setInfoModal(() => defaultINFO);
             }
-            else return setModalBox(modalBox => false);
+            else return setModalBox(() => false);
         }
-        setModalBox(modalBox => showmodal);
-    }
+        setModalBox(() => showmodal);
+    };
 
     return (
-        <ModalContext.Provider value={{ShowModal, setModalBox, Specialists, List_Menu, List_Orders, TimeBorderTable, infoModal, setInfoModal}}>
+        <ModalContext.Provider value={{ShowModal, setModalBox, Specialists, List_Menu, List_Orders, TimeBorderTable, infoModal, setInfoModal, setHeight}}>
             <Container>
                 <Row>
-                    <Col xs={3}></Col>
+                    <Col xs={3}> </Col>
                     <Col xs={9} >
                         <RenderDataPagination
                             StartDate={moment().subtract(1,'days').format('DD MM YYYY')}
-                            EndDate={moment().add(14, 'days').format('DD MM YYYY')}
+                            EndDate={moment().add(TimeBorderTable.endDate, 'days').format('DD MM YYYY')}
                         />
                     </Col>
                     <Col xs={3} className='FixLeft'>
-                        <SpecialistsList />
+                        <SpecialistsList Height={height}/>
                     </Col>
                     <Col xs={9} className='FixRight'>
                         <RenderTable />
@@ -78,6 +73,6 @@ const BaseTable = () => {
             </Container>
         </ModalContext.Provider>
     )
-}
+};
 
 export default BaseTable

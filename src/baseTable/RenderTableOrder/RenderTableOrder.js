@@ -1,4 +1,4 @@
-import React, {useContext, useRef} from 'react';
+import React, {useContext, useRef, useEffect} from 'react';
 import moment from 'moment';
 import { IoMdTime } from "react-icons/io";
 import ModalContext from "../ModalContext";
@@ -39,28 +39,26 @@ const Order = ({groupS, id, moveGroups, index, worker, nameGroup}) => {
     const opacity = isDragging ? 0 : 1;
     drag(drop(ref));
 
+    const TIME_PRICE = return_TIME_PRICE_(List_Menu, groupS);
+
     let time_Classes = {}; //Classes of orders
 
-    /*useEffect(() => {
+    useEffect(() => {
         let orderNew = null;
         orderNew = setInterval(() => {
-            time_Classes = Check_TIME_and_Return_Classes_(groupS.time_start + TIME_PRICE.time, groupS.payd , groupS.status);
+            if(groupS) time_Classes= Check_TIME_and_Return_Classes_(groupS.time_start + TIME_PRICE.time, groupS.payd , groupS.status);
         }, 1000);
         return () => clearInterval(orderNew);
-    });*/
+    },[time_Classes]);
+
 
     if(groupS){
         const startTime = moment().startOf('day').add(groupS.time_start, 'minutes').format('HH:mm');
-        const TIME_PRICE = return_TIME_PRICE_(List_Menu, groupS);
-        const ColSpan = Math.ceil(TIME_PRICE.time/30);
-        const Width_percent = Math.round((TIME_PRICE.time/30) / ColSpan * 100) + '%';
-
-        time_Classes = Check_TIME_and_Return_Classes_(groupS.time_start + TIME_PRICE.time, groupS.payd , groupS.status);
-
-        return (<td  key={id} className='OutsideOrder' colSpan={ColSpan} >
+        time_Classes= Check_TIME_and_Return_Classes_(groupS.time_start + TIME_PRICE.time, groupS.payd , groupS.status);
+        return (<td  key={id} className='OutsideOrder' colSpan={TIME_PRICE.ColSpan} >
             <div ref={ref}
                  className={time_Classes.BoxShadow + ' InitData_in_Table'}
-                 style={{width:Width_percent, opacity}}
+                 style={{width:TIME_PRICE.Width_percent, opacity}}
                  onClick={ShowModal.bind(null, true, groupS)}>
                 <span>
                     <strong className={time_Classes.Time}>

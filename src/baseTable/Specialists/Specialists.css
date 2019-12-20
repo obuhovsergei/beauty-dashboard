@@ -1,5 +1,5 @@
 /*Classes for Specialists*/
-.List_Specialsts{margin-top: 4.8em;}
+.List_Specialsts{margin-top: 2em;padding-top: 43px;}
 .List_Specialsts>div{border: none}
 .List_Specialsts>div:nth-of-type(odd){height: 5.2rem;}
 .List_Specialsts>div:nth-of-type(even){height: 60px;background: #F2F2F2}

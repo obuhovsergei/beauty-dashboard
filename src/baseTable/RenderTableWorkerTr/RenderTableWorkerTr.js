@@ -1,16 +1,17 @@
-import React, {useCallback, useContext, useState} from 'react';
+import React, {useCallback, useContext, useEffect, useRef, useState} from 'react';
 import ModalContext from "../ModalContext";
 import Order from "../RenderTableOrder/RenderTableOrder";
 import {return_TIME_PRICE_, Sort_other_ListGroup} from '../Fuctions';
 import update from "immutability-helper";
 
 const RenderTableWorkerTr = ({worker, Time_Minutes_Body}) => {
-    const { List_Menu, List_Orders } = useContext(ModalContext);
+    const { List_Menu, List_Orders, setHeight } = useContext(ModalContext);
+
     const groupS = List_Orders.filter(list_workers => list_workers.group === worker.id); //Filtering groups on active specialist
     const [groups, setGroups] = useState(groupS);
-
     const moveGroups = useCallback(
         (dragObject, hoverObject) => {
+            setGroups(List_Orders.filter(list_workers => list_workers.group === worker.id)); //Fix acynh new order
             //Indexes
             const dragIndex = groups.findIndex(item => item.time_start === dragObject);
             const hoverIndex = groups.findIndex(item => item.time_start === hoverObject);
@@ -85,10 +86,26 @@ const RenderTableWorkerTr = ({worker, Time_Minutes_Body}) => {
                 }
             }
         },
-        [groups, List_Menu],
+        [groups, List_Menu, List_Orders, worker.id],
     );
+
+    const RefHeight = useRef(null);
+
+    useEffect(() => {
+        let count = null;
+        count = setInterval(() => {
+            const Class = RefHeight.current.className;
+            const Height = RefHeight.current.clientHeight;
+            if(!Class.includes('pass')) setHeight( height => {
+                height.forEach(row => { if(row.class === Class) row.value = Height });
+                return height;
+            })
+
+        }, 1000);
+        return () => clearInterval(count);
+    });
     return(
-        <tr key={worker.id}>{
+        <tr key={worker.id} ref={RefHeight} className={'TR'+ worker.id}>{
             Time_Minutes_Body.map(row_times =>{
                 for(let i=0; i < groupS.length; i++){
                     const TIME_PRICE = return_TIME_PRICE_(List_Menu, groupS[i]);

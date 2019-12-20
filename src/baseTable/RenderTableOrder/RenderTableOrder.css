@@ -18,24 +18,25 @@
 .redShadow{box-shadow: 0 3px 1px #FF6043;}
 .grayShadow{box-shadow: 0 3px 1px #8D8D8D;}
 .defaultShadow{box-shadow: 0 3px 1px #8D43FF;}
-.DidNotCome{display: block!important;padding-top: .2rem;font-weight: normal;font-size: .6rem;line-height: 13px;color: #B8B8B8;}
+.DidNotCome{display: block!important;padding-top: .2rem;font-weight: normal;font-size: .6rem; min-width:4rem;line-height:13px;color: #B8B8B8;}
 
 /*Classes for Box of Table*/
 .InitData_in_Table{
     height: 100%;
-    padding: .7rem .6rem;
+    /*padding: .7rem .6rem;*/
     background: #FFFFFF;
     border-radius: 5px;
     position: relative;
 }
 .InitData_in_Table:hover{cursor: pointer;background: #F8F4FF;}
-.InitData_in_Table>span:first-child{justify-content: space-between;font-size: .75rem;padding-bottom: .7rem;}
+.InitData_in_Table>span:first-child{justify-content: space-between;font-size: .75rem;padding: .4rem .6rem;}
 .InitData_in_Table>span{
     font-weight: 300;
     font-size: 14px;
     line-height: 16px;
     display: flex;
     justify-content:left;
+    padding: .1rem .6rem;
 }
 .InitData_in_Table>span>strong{ display: flex; align-items: center;font-weight: bold;font-size: 11px;line-height: 13px;}
 .InitData_in_Table>span>strong>svg{ margin-right: .2rem; }

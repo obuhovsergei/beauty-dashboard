@@ -2,6 +2,7 @@ import React, {useContext} from "react";
 import { getTimeToMin, Return_Start_End_Times } from "../../baseTable/Fuctions";
 import {Button, Col, Row} from "react-bootstrap";
 import { IoMdTime } from "react-icons/io";
+import { MdAttachMoney } from "react-icons/md";
 import ModalContext from "../../baseTable/ModalContext";
 import './TotalInformationModal.css'
 
@@ -31,12 +32,12 @@ const TotalInformationModal = ({TotalMenu}) => {
                 <span className='paddingGrid'>{getTimeToMin(TotalMenu.time)}</span>
                 <span className='paddingGrid'><strong>{TotalMenu.price}$</strong></span>
                 {infoModal.payd?(
-                    <Button variant="success" size="sm" disabled={true}><IoMdTime/> Payd</Button>
+                    <Button variant="success" size="sm" disabled={true}><MdAttachMoney/> Payd</Button>
                 ):(
-                    <Button variant="success" size="sm" onClick={Pay.bind(null, true)}><IoMdTime/> Pay</Button>
+                    <Button variant="success" size="sm" onClick={Pay.bind(null, true)}><MdAttachMoney/> Pay</Button>
                 )}
             </Col>
         </Row>
     )
-}
+};
 export default TotalInformationModal

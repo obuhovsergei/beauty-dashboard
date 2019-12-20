@@ -5,15 +5,14 @@ import { List_Workers_add }  from '../Fuctions';
 import ModalContext from "../ModalContext";
 import './Specialists.css'
 
-const SpecialistsList = () => {
+const SpecialistsList = ({Height}) => {
     const { Specialists } = useContext(ModalContext);
-    const List_Workers_add_pass = List_Workers_add(Specialists);
-
+    const List_Workers_add_pass = List_Workers_add(Specialists, Height);
     return (
         <ListGroup className='List_Specialsts' variant='flush'>
             {List_Workers_add_pass.map(List =>{
                 if(typeof (List.id) === 'number'){
-                    return (<ListGroup.Item key={List.id} className='d-flex justify-content-start align-content-center'>
+                    return (<ListGroup.Item key={List.id} style={{height:List.height}} className='d-flex justify-content-start align-content-center'>
                         <span className='paddingGridTime'>
                             <Image src={Spec} className='ImageSpecialist' roundedCircle={true}/>
                         </span>

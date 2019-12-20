@@ -17,11 +17,11 @@ function ModalWindow() {
         let flag = false;
         if(toggle === 'up') Sorting_ListOrders(flag, Product, List_Orders,List_Menu, infoModal);
 
-        else List_Orders.forEach(infoModal => {
-            if(infoModal.id === ID_List_orders){
-                for(let ID_menu in infoModal.id_menu){
-                    if(infoModal.id_menu[ID_menu] === Product){
-                        infoModal.id_menu.splice(ID_menu, 1);
+        else List_Orders.forEach(List_Order => {
+            if(List_Order.id === ID_List_orders){
+                for(let index in List_Order.id_menu){
+                    if(List_Order.id_menu[index] === Product){
+                        List_Order.id_menu.splice(index, 1);
                         break
                     }
                 }
@@ -40,12 +40,12 @@ function ModalWindow() {
                      if(infoModal.id_menu[j] !== id) Arr.push(infoModal.id_menu[j])
                 }
             }
-        })
+        });
         infoModal.id_menu = Arr;
         //Delete if No have any Orders
         if(!infoModal.id_menu.length){
-            let INDEX_DEL = 0
-            List_Orders.forEach((list, index) => {if(list.id ===infoModal.id) INDEX_DEL = index})
+            let INDEX_DEL = 0;
+            List_Orders.forEach((list, index) => {if(list.id ===infoModal.id) INDEX_DEL = index});
             List_Orders.splice(INDEX_DEL, 1);
         }
 
