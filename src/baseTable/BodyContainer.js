@@ -12,7 +12,7 @@ const TimeBorderTable = {
     start:510,  //Begin timetable in minutes
     end:1020,   //End timetable in minutes
     step:30,    //Step of time in minutes
-    endDate: 14 //End Date to paginator
+    endDate: 13 //End Date to paginator
 }; // From 9:00 to 18:00
 
 const BaseTable = () => {
@@ -32,18 +32,16 @@ const BaseTable = () => {
             if(worker && typeof(worker) === 'number'){
                 const defaultINFO = {
                     id: 0,
-                    group: 1,
+                    group: worker,
                     name: "New Client",
                     telephone: "+1111111111",
                     date: moment().startOf('day').format('DD-MM-YYYY'),
-                    time_start:1,
+                    time_start:Order,
                     comments:"",
                     status: false,
                     payd: false,
                     id_menu: []
                 }; //Default information if click on NON order
-                defaultINFO.time_start = Order;
-                defaultINFO.group = worker;
                 setInfoModal(() => defaultINFO);
             }
             else return setModalBox(() => false);
@@ -58,7 +56,7 @@ const BaseTable = () => {
                     <Col xs={3}> </Col>
                     <Col xs={9} >
                         <RenderDataPagination
-                            StartDate={moment().subtract(1,'days').format('DD MM YYYY')}
+                            StartDate={moment().format('DD MM YYYY')}
                             EndDate={moment().add(TimeBorderTable.endDate, 'days').format('DD MM YYYY')}
                         />
                     </Col>

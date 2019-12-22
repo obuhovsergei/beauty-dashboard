@@ -133,7 +133,7 @@ const Return_Start_End_Times = (StartMinutes, EndMinutes) => {
 };
 
 //Sorting groups by flag
-const Sorting_ListOrders = (flag, Product, List_Orders,List_Menu, infoModal) => {
+const Sorting_ListOrders = (flag, Product, List_Orders,List_Menu, infoModal, setInfoModal) => {
     const active_Menus = [];
     infoModal.id_menu.forEach(id_menu =>{
         List_Menu.forEach(order_menu =>{if(order_menu.id === id_menu) active_Menus.push(order_menu)})
@@ -149,10 +149,13 @@ const Sorting_ListOrders = (flag, Product, List_Orders,List_Menu, infoModal) => 
         if(!Filtered_List_Orders.length || Filtered_List_Orders[Filtered_List_Orders.length - 1].id !== el.time_start) Filtered_List_Orders.push(el);
         return Filtered_List_Orders
     }, []);
-    //Sort to Time_start
+    //Sort to Time_start and push new menu if second order no have many time
     sorting_List_Orders.forEach((list, index, arr) => {
         if(list.id === infoModal.id && arr[index+1]) {
-            if(arr[index+1].time_start > TotalTime){infoModal.id_menu.push(Product)}
+            if(arr[index+1].time_start > TotalTime){
+                setInfoModal(prev => ({...prev, id_menu: [...prev.id_menu, Product]}));
+                list.id_menu.push(Product);
+            }
         }
     });
 };

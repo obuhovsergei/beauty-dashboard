@@ -11,12 +11,12 @@ const styles = {
         boxShadow: '0 2px 11px rgba(82, 66, 108, 0.157665)',
         borderRadius: '4px'
     }
-}
+};
 
 const AddNewProductsModal = () => {
     const [dropdownMenus, setDropdownMenus] = useState(false);
     const {List_Menu, infoModal, setInfoModal, List_Orders} = useContext(ModalContext);
-    const [openServices, setOpenServices] = useState({})
+    const [openServices, setOpenServices] = useState({});
     //Open ListMenu and change Styles
     const ShowDropDownProduct = (Show) => {
         setDropdownMenus(Show);
@@ -37,10 +37,10 @@ const AddNewProductsModal = () => {
             }
             //Add New products
             let flag = false;
-            Sorting_ListOrders(flag, Product, List_Orders,List_Menu, infoModal);
+            Sorting_ListOrders(flag, Product, List_Orders,List_Menu, infoModal, setInfoModal);
 
             //Save to LocalStorage
-            if(localStorage.getItem('List_Orders') !== null && List_Orders && !flag) localStorage.setItem('List_Orders', JSON.stringify(List_Orders));
+            //if(localStorage.getItem('List_Orders') !== null && List_Orders && !flag) localStorage.setItem('List_Orders', JSON.stringify(List_Orders));
         }
     };
 

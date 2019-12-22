@@ -97,13 +97,14 @@ const RenderTableWorkerTr = ({worker, Time_Minutes_Body}) => {
             const Class = RefHeight.current.className;
             const Height = RefHeight.current.clientHeight;
             if(!Class.includes('pass')) setHeight( height => {
-                height.forEach(row => { if(row.class === Class) row.value = Height });
+                height.forEach(row => {
+                    if(row.class === Class) row.value = Height });
                 return height;
             })
 
         }, 1000);
         return () => clearInterval(count);
-    });
+    }, [RefHeight]);
     return(
         <tr key={worker.id} ref={RefHeight} className={'TR'+ worker.id}>{
             Time_Minutes_Body.map(row_times =>{
