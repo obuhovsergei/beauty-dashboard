@@ -1,5 +1,5 @@
 /*Classes for Pagination Calendar */
-.Pagination_date{margin-top: 3rem;}
+.Pagination_date{margin-top: 3rem}
 .Pagination_date>li>a{background: #FFFFFF;}
 .Pagination_date::-webkit-scrollbar { display: none;}
 .Pagination_date a.page-link{

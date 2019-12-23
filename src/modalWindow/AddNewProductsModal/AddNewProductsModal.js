@@ -22,10 +22,12 @@ const AddNewProductsModal = () => {
         setDropdownMenus(Show);
         setOpenServices(styles.openServices);
     };
+    const CloseDropDownProduct = (Show) => {
+        setDropdownMenus(Show);
+        setOpenServices({});
+    };
     //Add New products
     const AddProducts = (Product, disable) => {
-        setDropdownMenus(false);    //Close Menus
-        setOpenServices({});        //Css remove on menus
         if(!disable && Product) {
             //Checking infoModal in List_Orders
             let newOrder = false;
@@ -40,7 +42,7 @@ const AddNewProductsModal = () => {
             Sorting_ListOrders(flag, Product, List_Orders,List_Menu, infoModal, setInfoModal);
 
             //Save to LocalStorage
-            //if(localStorage.getItem('List_Orders') !== null && List_Orders && !flag) localStorage.setItem('List_Orders', JSON.stringify(List_Orders));
+            if(localStorage.getItem('List_Orders') !== null && List_Orders && !flag) localStorage.setItem('List_Orders', JSON.stringify(List_Orders));
         }
     };
 
@@ -60,7 +62,7 @@ const AddNewProductsModal = () => {
                     <span className='AddGoodSpan'>Add goods or services</span>
                 </div>
             ):(
-                <ListGroup className='Menu_List_Name_value' variant='flush'>
+                <ListGroup className='Menu_List_Name_value' variant='flush' onClick={CloseDropDownProduct.bind(null, false)}>
                     <ListGroup.Item disabled className='Add_New_Products_List'>
                         <span>Products</span>
                     </ListGroup.Item>

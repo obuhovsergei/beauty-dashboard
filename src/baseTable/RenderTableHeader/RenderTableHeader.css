@@ -36,6 +36,8 @@
     font-weight: bold;
     font-size: 0.8rem;
 }
-thead.td{
+thead>tr>td{
     height: 43px;
+    vertical-align: inherit!important;
+    padding: 0!important;
 }

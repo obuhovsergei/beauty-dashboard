@@ -9,6 +9,7 @@ import './RenderTable.css'
 
 const RenderTable = () => {
     const { TimeBorderTable } = useContext(ModalContext);
+    //Generate ID's for table
     const Head = [];
     const Body_Def = [];
     for(let i = TimeBorderTable.start; i <= TimeBorderTable.end; i = i + TimeBorderTable.step){
@@ -27,6 +28,6 @@ const RenderTable = () => {
             </tbody>
         </Table>
     )
-}
+};
 
 export default RenderTable

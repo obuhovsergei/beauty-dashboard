@@ -92,19 +92,15 @@ const RenderTableWorkerTr = ({worker, Time_Minutes_Body}) => {
     const RefHeight = useRef(null);
 
     useEffect(() => {
-        let count = null;
-        count = setInterval(() => {
-            const Class = RefHeight.current.className;
-            const Height = RefHeight.current.clientHeight;
-            if(!Class.includes('pass')) setHeight( height => {
-                height.forEach(row => {
-                    if(row.class === Class) row.value = Height });
-                return height;
-            })
+        const Class = RefHeight.current.className;
+        const Height = RefHeight.current.clientHeight;
+        if(!Class.includes('pass')) setHeight(prev => {
+            prev.forEach(row => {
+                if(row.class === Class) row.value = Height });
+            return prev;
+        })
+    });
 
-        }, 1000);
-        return () => clearInterval(count);
-    }, [RefHeight]);
     return(
         <tr key={worker.id} ref={RefHeight} className={'TR'+ worker.id}>{
             Time_Minutes_Body.map(row_times =>{

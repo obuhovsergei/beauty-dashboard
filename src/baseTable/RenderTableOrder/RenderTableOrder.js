@@ -1,4 +1,4 @@
-import React, {useContext, useRef, useEffect} from 'react';
+import React, {useContext, useRef, useEffect, useState} from 'react';
 import moment from 'moment';
 import { IoMdTime } from "react-icons/io";
 import ModalContext from "../ModalContext";
@@ -6,9 +6,7 @@ import { return_TIME_PRICE_ , Check_TIME_and_Return_Classes_} from '../Fuctions'
 import {useDrag, useDrop} from "react-dnd";
 import './RenderTableOrder.css'
 
-const ItemTypes = {
-    CARD: 'prop',
-};
+const ItemTypes = { CARD: 'prop' };
 
 const Order = ({groupS, id, moveGroups, index, worker, nameGroup}) => {
     const { ShowModal, List_Menu, List_Orders } = useContext(ModalContext);
@@ -39,22 +37,40 @@ const Order = ({groupS, id, moveGroups, index, worker, nameGroup}) => {
     const opacity = isDragging ? 0 : 1;
     drag(drop(ref));
 
+    // Classes
+    const[time_Classes, setTime_Classes] = useState({
+        Time:'ClockWaitCome',
+        Money:'moneyGray',
+        BoxShadow:'defaultShadow'
+    });
+
     const TIME_PRICE = return_TIME_PRICE_(List_Menu, groupS);
 
-    let time_Classes = {}; //Classes of orders
+    //First push classes
+    useEffect(() =>{
+        if(groupS) {
+            const TIME_PRICE_ = return_TIME_PRICE_(List_Menu, groupS);
+            const Classes = Check_TIME_and_Return_Classes_(groupS.time_start + TIME_PRICE_.time, groupS.payd , groupS.status);
+            if(groupS && TIME_PRICE_) setTime_Classes(Classes);
+        }
+    }, [groupS, List_Menu]);
 
+    //Render each 1000 ms classes
     useEffect(() => {
         let orderNew = null;
         orderNew = setInterval(() => {
-            if(groupS) time_Classes= Check_TIME_and_Return_Classes_(groupS.time_start + TIME_PRICE.time, groupS.payd , groupS.status);
+            if(groupS) {
+                const Classes = Check_TIME_and_Return_Classes_(groupS.time_start + TIME_PRICE.time, groupS.payd , groupS.status);
+                if(groupS && TIME_PRICE) setTime_Classes(Classes);
+            }
         }, 1000);
         return () => clearInterval(orderNew);
-    },[time_Classes]);
+    },[setTime_Classes, groupS, TIME_PRICE]);
 
 
     if(groupS){
         const startTime = moment().startOf('day').add(groupS.time_start, 'minutes').format('HH:mm');
-        time_Classes= Check_TIME_and_Return_Classes_(groupS.time_start + TIME_PRICE.time, groupS.payd , groupS.status);
+
         return (<td  key={id} className='OutsideOrder' colSpan={TIME_PRICE.ColSpan} >
             <div ref={ref}
                  className={time_Classes.BoxShadow + ' InitData_in_Table'}
@@ -76,6 +92,7 @@ const Order = ({groupS, id, moveGroups, index, worker, nameGroup}) => {
                 )}
             </div>
         </td>)
+
     }
     else {
         if(isNaN(worker)) return (

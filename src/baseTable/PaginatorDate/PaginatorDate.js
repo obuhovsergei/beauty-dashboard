@@ -7,10 +7,8 @@ import { Generate_Paginator } from '../Fuctions';
 //Bug fix moment
 moment.fn.fromNow = function () {return moment().diff(this, 'days')};
 
-
 const DatePagination = ({StartDate, EndDate}) => {
     const rows = Generate_Paginator(StartDate, EndDate);
-
     return(
         <Pagination className='Pagination_date'>
             {rows.map(row => {

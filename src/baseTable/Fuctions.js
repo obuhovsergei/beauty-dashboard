@@ -3,7 +3,7 @@ import moment from "moment";
 import {Pagination} from "react-bootstrap";
 
 //Get time Now
-const Time_Now = ( m = moment(new Date()).add(-11, 'hour').add(58, 'minutes') ) => m.hour()*60 + m.minute();
+const Time_Now = ( m = moment(new Date()).add(-12, 'hour') ) => m.hour()*60 + m.minute();
 
 //Add Pass names for specialists
 const List_Workers_add = (Specialists, Height) => {
@@ -22,39 +22,32 @@ const Generate_Paginator = (StartDate, EndDate) => {
 
     if (!start.isValid() || !end.isValid() || end < start) return(<Pagination.Item>Insert Date is no valid!</Pagination.Item>);
 
-    let rows = [];
+    const rows = [];
     let k = 0; //ID
-    const BeforeFromNow = Math.abs(moment(end).fromNow());  // Количество дней до EndTime
-    const AfterFromNow = moment(start).fromNow();           // Количество дней до StartTime
-
+    const BeforeFromNow = Math.abs( moment( end ).fromNow() );  // Count days before EndTime
+    const AfterFromNow = moment(start).fromNow();           // Count days beforeStartTime
+    //Dates before today
     for(let i = AfterFromNow; i > 0; i--){
         const dd = moment().subtract(i, 'days').format('DD');
         const dayOf = moment().subtract(i, 'days').format('dd');
         const Month = moment().subtract(i, 'days').format('MMM');
         k=++k;
-        if(dd === '01'){
-            rows.push({id:Month, d:Month, disable: 'disabled_pagin'});
-            rows.push({id:k, d:dd, dayOf:dayOf})
-        }
-        else if(dayOf === 'Sa' || dayOf === 'Su') rows.push({id:k, d:dd, disable: 'disabled_pagin', dayOf:dayOf});
-        else rows.push({id:k, d:dd, dayOf:dayOf});
+        (dd === '01') ? rows.push({id:Month, d:Month, disable: 'disabled_pagin'}, {id:k, d:dd, dayOf:dayOf})    :
+        (dayOf === 'Sa' || dayOf === 'Su') ? rows.push({id:k, d:dd, disable: 'disabled_pagin', dayOf:dayOf})    :
+        rows.push({id:k, d:dd, dayOf:dayOf})
     }
-
+    //Dates after today
     for(let i = 0; i < BeforeFromNow; i++){
         const check = moment().add(i, 'days');
         const dd = check.format('DD');
         const dayOf = check.format('dd');
         const Month = check.format('MMM');
         k=++k;
-        if(dd === '01'){
-            rows.push({id:Month, d:Month, disable: 'disabled_padin'});
-            rows.push({id:k, d:dd, dayOf:dayOf})
-        }
-        else if (check.isSame(moment())) rows.push({id:k, d:dd, active: true, dayOf:dayOf});
-        else if(dayOf === 'Sa' || dayOf === 'Su') rows.push({id:k, d:dd, disable: 'disabled_pagin', dayOf:dayOf});
-        else rows.push({id:k, d:dd, dayOf:dayOf})
+        (dd === '01') ? rows.push({id:Month, d:Month, disable: 'disabled_pagin'}, {id:k, d:dd, dayOf:dayOf})   :
+        (check.isSame(moment(), 'day')) ? rows.push({id:k, d:dd, active: true, dayOf:dayOf})        :
+        (dayOf === 'Sa' || dayOf === 'Su') ? rows.push({id:k, d:dd, disable: 'disabled_pagin', dayOf:dayOf})   :
+        rows.push({id:k, d:dd, dayOf:dayOf})
     }
-
     return rows
 };
 
@@ -187,7 +180,7 @@ const ValueOfMenus = (Menus) => {
     });
     //Sort and del any copy menus
     return NewMenus.sort(function (a,b) {return a.id < b.id ? -1 : 1}).reduce(function(NewMenus, el){
-        if(!NewMenus.length || NewMenus[NewMenus.length - 1].id !== el.id) NewMenus.push(el)
+        if(!NewMenus.length || NewMenus[NewMenus.length - 1].id !== el.id) NewMenus.push(el);
         return NewMenus
     }, [])
 };

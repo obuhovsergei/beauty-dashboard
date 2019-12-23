@@ -16,11 +16,10 @@ const RenderTableBody = ({DataBody}) => {
                     worker={worker}
                     key={worker.id}
                     Time_Minutes_Body={DataBody}
-                    //groupS={groupS}
                 />
             )
         })
     )
-}
+};
 
 export default RenderTableBody

@@ -15,16 +15,17 @@ const TimeBorderTable = {
     endDate: 13 //End Date to paginator
 }; // From 9:00 to 18:00
 
+
 const BaseTable = () => {
     const [modalBox, setModalBox] = useState(false); //Open Modal
-    const [infoModal, setInfoModal] = useState({});
+    const [infoModal, setInfoModal] = useState({});  //Modal Window info
     const [height, setHeight] = useState([
         {class:'TR1', value:82},
         {class:'TR2', value:82},
         {class:'TR3', value:82},
         {class:'TR4', value:82},
         {class:'TR5', value:82}
-    ]);
+    ]);               //Height of specialists
 
     const ShowModal = ( showmodal, Order, worker) => {
         if(typeof(Order) === 'object') setInfoModal(() => Order);
@@ -54,12 +55,14 @@ const BaseTable = () => {
             <Container>
                 <Row>
                     <Col xs={3}> </Col>
-                    <Col xs={9} >
+                    <Col xs={9}>
                         <RenderDataPagination
                             StartDate={moment().format('DD MM YYYY')}
                             EndDate={moment().add(TimeBorderTable.endDate, 'days').format('DD MM YYYY')}
                         />
                     </Col>
+                </Row>
+                <Row>
                     <Col xs={3} className='FixLeft'>
                         <SpecialistsList Height={height}/>
                     </Col>
@@ -72,5 +75,6 @@ const BaseTable = () => {
         </ModalContext.Provider>
     )
 };
+
 
 export default BaseTable
