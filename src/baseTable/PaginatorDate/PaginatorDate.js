@@ -2,13 +2,13 @@ import React from 'react';
 import {Pagination} from 'react-bootstrap';
 import moment from 'moment';
 import './PaginatorDate.css';
-import { Generate_Paginator } from '../Fuctions';
+import { GeneratePagination } from '../Fuctions';
 
-//Bug fix moment
+//Bug fix momentJS
 moment.fn.fromNow = function () {return moment().diff(this, 'days')};
 
 const DatePagination = ({StartDate, EndDate}) => {
-    const rows = Generate_Paginator(StartDate, EndDate);
+    const rows = GeneratePagination(StartDate, EndDate);
     return(
         <Pagination className='Pagination_date'>
             {rows.map(row => {

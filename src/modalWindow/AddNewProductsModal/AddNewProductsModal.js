@@ -1,8 +1,8 @@
 import React, {useContext, useState} from "react";
 import { IoIosAdd } from 'react-icons/io';
-import {ListGroup} from "react-bootstrap";
+import { ListGroup } from "react-bootstrap";
 import ModalContext from "../../baseTable/ModalContext";
-import {Sorting_ListOrders} from "../../baseTable/Fuctions";
+import { SortingListOrders } from "../../baseTable/Fuctions";
 import './AddNewProductsModal.css'
 
 const styles = {
@@ -14,14 +14,15 @@ const styles = {
 };
 
 const AddNewProductsModal = () => {
-    const [dropdownMenus, setDropdownMenus] = useState(false);
-    const {List_Menu, infoModal, setInfoModal, List_Orders} = useContext(ModalContext);
-    const [openServices, setOpenServices] = useState({});
+    const [dropdownMenus, setDropdownMenus] = useState(false); //Dropdown for Menus
+    const {ListMenu, infoModal, setInfoModal, ListOrders} = useContext(ModalContext);
+    const [openServices, setOpenServices] = useState({}); // Styles for Menus
     //Open ListMenu and change Styles
     const ShowDropDownProduct = (Show) => {
         setDropdownMenus(Show);
         setOpenServices(styles.openServices);
     };
+    //Close ListMenu and change Styles
     const CloseDropDownProduct = (Show) => {
         setDropdownMenus(Show);
         setOpenServices({});
@@ -31,31 +32,31 @@ const AddNewProductsModal = () => {
         if(!disable && Product) {
             //Checking infoModal in List_Orders
             let newOrder = false;
-            List_Orders.forEach(list => {if(list.id === infoModal.id) newOrder = true});
+            ListOrders.forEach(list => {if(list.id === infoModal.id) newOrder = true});
             if(!newOrder){
-                infoModal.id = List_Orders[List_Orders.length - 1].id + 1; //Add ID New Order
+                infoModal.id = ListOrders[ListOrders.length - 1].id + 1; //Add ID New Order
                 setInfoModal(infoModal);
-                List_Orders.push(infoModal);
+                ListOrders.push(infoModal);
             }
             //Add New products
             let flag = false;
-            Sorting_ListOrders(flag, Product, List_Orders,List_Menu, infoModal, setInfoModal);
+            SortingListOrders(flag, Product, ListOrders,ListMenu, infoModal, setInfoModal);
 
             //Save to LocalStorage
-            if(localStorage.getItem('List_Orders') !== null && List_Orders && !flag) localStorage.setItem('List_Orders', JSON.stringify(List_Orders));
+            if(localStorage.getItem('ListOrders') !== null && ListOrders && !flag) localStorage.setItem('ListOrders', JSON.stringify(ListOrders));
         }
     };
 
-    let New_List_Menu = JSON.parse(JSON.stringify(List_Menu)); //Cloning List_Menu
+    let NewListMenu = JSON.parse(JSON.stringify(ListMenu)); //Cloning ListMenu
     //Default NewList Disabled
-    New_List_Menu.forEach(NewList => NewList['disable'] = false);
+    NewListMenu.forEach(NewList => NewList['disable'] = false);
     //Change NewList to Disabled
     infoModal.id_menu.forEach(IDMenu => {
-        New_List_Menu.forEach(NewList => {if(IDMenu === NewList.id) NewList['disable'] = true})
+        NewListMenu.forEach(NewList => {if(IDMenu === NewList.id) NewList['disable'] = true})
     });
 
     return (
-        <div className='New_Products' style={openServices}>
+        <div className='New_Products' style={ openServices }>
             {!dropdownMenus? (
                 <div className="Add_services" onClick={ShowDropDownProduct.bind(null, true)}>
                     <IoIosAdd className='addIcon' />
@@ -67,7 +68,7 @@ const AddNewProductsModal = () => {
                         <span>Products</span>
                     </ListGroup.Item>
 
-                    {New_List_Menu.map(Menu =>
+                    { NewListMenu.map( Menu =>
                         <ListGroup.Item
                             className='Add_New_Products_List'
                             key={Menu.id}
@@ -77,7 +78,7 @@ const AddNewProductsModal = () => {
                             <span>{Menu.name}</span>
                             <span>{Menu.priceDef}$</span>
                         </ListGroup.Item>
-                    )}
+                    ) }
 
                 </ListGroup>
             )}

@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 import { Row, Col, Image } from 'react-bootstrap';
 import Scissors from '../../img/Sclssors.png';
-import PropTypes from 'prop-types';
 import Context from "../Context";
 import { IoIosTrash, IoIosArrowBack, IoIosArrowForward} from 'react-icons/io';
 import { getTimeToMin } from "../../baseTable/Fuctions";
@@ -37,14 +36,10 @@ const Menu_List = ({ menu }) => {
             </div>
             <div className='Price_menus'>
                 <span>
-                    {getTimeToMin(menu.time)} - {menu.price}$
+                    { getTimeToMin(menu.time) } - {menu.price}$
                 </span>
             </div>
         </li>)
-};
-
-Menu_List.propTypes = {
-    menu:PropTypes.object.isRequired
 };
 
 export default Menu_List;

@@ -1,17 +1,17 @@
 import React, {useCallback, useContext, useEffect, useRef, useState} from 'react';
 import ModalContext from "../ModalContext";
 import Order from "../RenderTableOrder/RenderTableOrder";
-import {return_TIME_PRICE_, Sort_other_ListGroup} from '../Fuctions';
+import {getTimePrice, SortOtherListGroup} from '../Fuctions';
 import update from "immutability-helper";
 
-const RenderTableWorkerTr = ({worker, Time_Minutes_Body}) => {
-    const { List_Menu, List_Orders, setHeight } = useContext(ModalContext);
+const RenderTableWorkerTr = ({worker, TimeMinutesBody}) => {
+    const { ListMenu, ListOrders, setHeight } = useContext(ModalContext);
 
-    const groupS = List_Orders.filter(list_workers => list_workers.group === worker.id); //Filtering groups on active specialist
-    const [groups, setGroups] = useState(groupS);
+    const groupS = ListOrders.filter(list_workers => list_workers.group === worker.id); //Filtering groups on active specialist
+    const [groups, setGroups] = useState(groupS); // get group for dragging
     const moveGroups = useCallback(
         (dragObject, hoverObject) => {
-            setGroups(List_Orders.filter(list_workers => list_workers.group === worker.id)); //Fix acynh new order
+            setGroups(ListOrders.filter(list_workers => list_workers.group === worker.id)); //Fix asinh new order
             //Indexes
             const dragIndex = groups.findIndex(item => item.time_start === dragObject);
             const hoverIndex = groups.findIndex(item => item.time_start === hoverObject);
@@ -47,48 +47,49 @@ const RenderTableWorkerTr = ({worker, Time_Minutes_Body}) => {
 
                 const drag = groups.find(item => item.time_start === dragObject);
                 //Sorting Groups
-                const Sorted_otherGroup = Sort_other_ListGroup(groups);
+                const SortedOtherGroup = SortOtherListGroup(groups);
 
                 //Get Total Time dragObject
-                const Total_TIME_dragGroup = return_TIME_PRICE_(List_Menu, drag);
+                const Total_TIME_dragGroup = getTimePrice(ListMenu, drag);
                 const Total_TIME_otherGroup = hoverObject + Total_TIME_dragGroup.time;
 
                 //Get first Group of hoverDrag
-                const hoverGroup_ = Sorted_otherGroup.find(item => {
+                const draggingGroup = SortedOtherGroup.find(item => {
                     if(item.time_start > hoverObject && item.time_start !== dragObject) return item;
                     else return false
                 });
 
                 //if next order have next groups
-                if(hoverGroup_ && Total_TIME_otherGroup > hoverGroup_.time_start) {
+                if(draggingGroup && Total_TIME_otherGroup > draggingGroup.time_start) {
                     //Get other groups after hoverObject
-                    const hoverAllGroups = Sorted_otherGroup.filter(item => item.time_start > hoverObject);
+                    const hoverAllGroups = SortedOtherGroup.filter(item => item.time_start > hoverObject);
                     //Get time to splice other groups
-                    let timeSplice = Total_TIME_dragGroup.time - (hoverGroup_.time_start - hoverObject);
+                    let timeSplice = Total_TIME_dragGroup.time - (draggingGroup.time_start - hoverObject);
                     const endOfTimeSplice = timeSplice%30; //If % lost
                     if(endOfTimeSplice != null) timeSplice = timeSplice + endOfTimeSplice;
                     //Add time to other groups
                     hoverAllGroups.map(group => group.time_start += timeSplice);
-                    setGroups(groups); //???
+                    setGroups(groups); //set dragging group
                 }
                 //if not have any groups
                 else {
                     drag.time_start = hoverObject;
-                    const dragIndex_ = groups.findIndex(item => item.time_start === hoverObject);
+                    const fixDragging = groups.findIndex(item => item.time_start === hoverObject);
                     setGroups(
                         update(groups, {
                             $splice: [
-                                [dragIndex_, 1],
-                                [dragIndex_, 0, drag ]
+                                [fixDragging, 1],
+                                [fixDragging, 0, drag ]
                             ]
                         })
                     )
                 }
             }
         },
-        [groups, List_Menu, List_Orders, worker.id],
+        [groups, ListMenu, ListOrders, worker.id],
     );
 
+    //Set height for specialists
     const RefHeight = useRef(null);
 
     useEffect(() => {
@@ -103,9 +104,9 @@ const RenderTableWorkerTr = ({worker, Time_Minutes_Body}) => {
 
     return(
         <tr key={worker.id} ref={RefHeight} className={'TR'+ worker.id}>{
-            Time_Minutes_Body.map(row_times =>{
+            TimeMinutesBody.map(row_times => {
                 for(let i=0; i < groupS.length; i++){
-                    const TIME_PRICE = return_TIME_PRICE_(List_Menu, groupS[i]);
+                    const TIME_PRICE = getTimePrice(ListMenu, groupS[i]);
                     const ColSpan = Math.ceil(TIME_PRICE.time/30);
                     if(groupS[i].time_start === row_times.id){
                         return (<Order

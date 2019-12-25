@@ -1,19 +1,20 @@
 import React, {useState, useEffect } from 'react';
 import moment from "moment";
-import { Time_Now } from '../Fuctions';
+import { TimeNow } from '../Fuctions';
 import './RenderTableHeader.css'
 
 
 const RenderTableHeader = ({DataHead}) => {
-    const Time_Now_Today = Time_Now();
-    const HourNow = moment().startOf('day').add(Time_Now_Today, 'minutes').format('HH');
-    const MinutesNow = moment().startOf('day').add(Time_Now_Today, 'minutes').format('mm');
+    const TimeNowToday = TimeNow();
+    const HourNow = moment().startOf('day').add(TimeNowToday, 'minutes').format('HH');
+    const MinutesNow = moment().startOf('day').add(TimeNowToday, 'minutes').format('mm');
 
-    const [timeNow, setTimeNow] = useState(moment().startOf('day').add(Time_Now_Today, 'minutes').format('HH:mm'));
+    const [timeNow, setTimeNow] = useState(moment().startOf('day').add(TimeNowToday, 'minutes').format('HH:mm'));
+    //Rerender Thead for table
     useEffect(() => {
         let interval = null;
         interval = setInterval(() => {
-            setTimeNow(timeNow => moment().startOf('day').add(Time_Now(), 'minutes').format('HH:mm'));
+            setTimeNow(() => moment().startOf('day').add(TimeNow(), 'minutes').format('HH:mm'));
             }, 1000);
         return () => clearInterval(interval);
     }, [timeNow]);
@@ -21,7 +22,7 @@ const RenderTableHeader = ({DataHead}) => {
 
     return(DataHead.map(row => {
         const HourCheck = moment().startOf('day').add(row.id, 'minutes').format('HH');
-        if(Time_Now_Today > row.id && HourCheck < HourNow) return(<td key={row.id} className='THeadPrevNow' colSpan={2}>{row.value}</td>);
+        if(TimeNowToday > row.id && HourCheck < HourNow) return(<td key={row.id} className='THeadPrevNow' colSpan={2}>{row.value}</td>);
         else if(HourCheck === HourNow) {
             const Width_percent = Math.round(MinutesNow / 60 * 100) + '%';
             return(
@@ -35,7 +36,7 @@ const RenderTableHeader = ({DataHead}) => {
         }
         else return(<td key={row.id} colSpan={2} className='THeadPast'>{row.value}</td>)
     }))
-}
+};
 
 
 export default RenderTableHeader

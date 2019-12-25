@@ -4,7 +4,7 @@ import ModalContext from "../../baseTable/ModalContext";
 import './ContactsModal.css'
 
 const Information_of_User = () => {
-    const { infoModal, setInfoModal, List_Orders, ShowModal} = useContext(ModalContext);
+    const { infoModal, setInfoModal, ListOrders, ShowModal} = useContext(ModalContext);
     const [name, setName] = useState(infoModal.name);
     const [telephone, setTelephone] = useState(infoModal.telephone);
     const [comments, setComments] = useState(infoModal.comments);
@@ -14,27 +14,27 @@ const Information_of_User = () => {
         if('false' === evt) status = false;
         if(infoModal.id_menu.length){
             infoModal.status = status;
-            setInfoModal(infoModal)
+            setInfoModal(infoModal);
             //Save to LocalStorage
-            if(localStorage.getItem('List_Orders') !== null && List_Orders) localStorage.setItem('List_Orders', JSON.stringify(List_Orders));
+            if(localStorage.getItem('ListOrders') !== null && ListOrders) localStorage.setItem('ListOrders', JSON.stringify(ListOrders));
         }
     };
 
     const handleChange = (e) => {
-        (e.target.name === 'Name client')? setName(e.target.value)
-            :(e.target.name === 'Telephone')? setTelephone(e.target.value)
-            :(e.target.name === 'Comments') ? setComments(e.target.value)
-            : console.log('Выход')
+        (e.target.name === 'Name client') ? setName(e.target.value)     : setName(infoModal.name);
+        (e.target.name === 'Telephone') ? setTelephone(e.target.value)  : setTelephone(infoModal.telephone);
+        (e.target.name === 'Comments') ? setComments(e.target.value)    : setComments(infoModal.comments);
     };
+
     const SaveContacts = () => {
         if(name && telephone && infoModal.id_menu.length){
             infoModal.name = name;
             infoModal.telephone = telephone;
             infoModal.comments = comments;
-            setInfoModal(infoModal)
+            setInfoModal(infoModal); // Set new infoModal
             //Save to LocalStorage
-            if(localStorage.getItem('List_Orders') !== null && List_Orders) localStorage.setItem('List_Orders', JSON.stringify(List_Orders));
-            ShowModal(false);
+            if(localStorage.getItem('ListOrders') !== null && ListOrders) localStorage.setItem('ListOrders', JSON.stringify(ListOrders));
+            ShowModal(false); //Close Modal
         }
     };
 
@@ -112,7 +112,7 @@ const Information_of_User = () => {
                 </Row>
             </Form.Group>
         </div>
-    );
-}
+    )
+};
 
 export default Information_of_User

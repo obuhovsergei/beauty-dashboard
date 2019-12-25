@@ -6,16 +6,16 @@ import ModalContext from "../ModalContext";
 const RenderTableBody = ({DataBody}) => {
     const { Specialists } = useContext(ModalContext);
 
-    const List_Workers_add_pass = [];
-    Specialists.map(elem => List_Workers_add_pass.push(elem, {id:'pass_'+elem.id, title:''}));
+    // eslint-disable-next-line no-unused-vars
+    const ListWorkersCurrent = [];
+    Specialists.forEach(elem => ListWorkersCurrent.push(elem, {id:'pass_'+elem.id, title:''}));
     return(
-        List_Workers_add_pass.map(worker =>{
-
+        ListWorkersCurrent.map(worker =>{
             return (
                 <RenderTableWorkerTr
                     worker={worker}
                     key={worker.id}
-                    Time_Minutes_Body={DataBody}
+                    TimeMinutesBody={DataBody}
                 />
             )
         })

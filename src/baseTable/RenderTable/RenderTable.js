@@ -11,11 +11,11 @@ const RenderTable = () => {
     const { TimeBorderTable } = useContext(ModalContext);
     //Generate ID's for table
     const Head = [];
-    const Body_Def = [];
+    const BodyID = [];
     for(let i = TimeBorderTable.start; i <= TimeBorderTable.end; i = i + TimeBorderTable.step){
-        const Ttt = moment.utc().startOf('day').add(i + TimeBorderTable.step, 'minutes').format('mm');
-        if(Ttt === '00') Head.push({id : i + TimeBorderTable.step, value: moment.utc().startOf('day').add(i + TimeBorderTable.step, 'minutes').format('HH:mm')});
-        Body_Def.push({id : i + TimeBorderTable.step, value: ''})
+        const CheckTime = moment.utc().startOf('day').add(i + TimeBorderTable.step, 'minutes').format('mm');
+        if(CheckTime === '00') Head.push({id : i + TimeBorderTable.step, value: moment.utc().startOf('day').add(i + TimeBorderTable.step, 'minutes').format('HH:mm')});
+        BodyID.push({id : i + TimeBorderTable.step, value: ''})
     }
 
     return(
@@ -24,7 +24,7 @@ const RenderTable = () => {
                 <tr><RenderTableHeader DataHead={Head}/></tr>
             </thead>
             <tbody>
-                <RenderTableBody DataBody={Body_Def}/>
+                <RenderTableBody DataBody={BodyID}/>
             </tbody>
         </Table>
     )

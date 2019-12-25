@@ -7,21 +7,20 @@ import './MenuBodyModal.css'
 
 
 const Order_menu_of_User = ({infoModal}) => {
-    //const { infoModal} = useContext(ModalContext);
-    const List_Menu = JSON.parse(localStorage.getItem("List_Menu")); //Костыль
+    const ListMenu = JSON.parse(localStorage.getItem("ListMenu")); //Get current ListMenu
     // Modal Active Menus
     const ActiveMenus = [];
     infoModal.id_menu.forEach(id_menu =>{
-        List_Menu.forEach(order_menu =>{if(order_menu.id === id_menu) ActiveMenus.push(order_menu)})
+        ListMenu.forEach(order_menu =>{if(order_menu.id === id_menu) ActiveMenus.push(order_menu)})
     });
     //Modal Total Price
-    const TotalMenu = ChangeTotalTimePrice(ActiveMenus); /* Change Price and Time from Menus*/
-    const Orders_menus = ValueOfMenus(ActiveMenus); //Sort and del
+    const TotalMenu = ChangeTotalTimePrice(ActiveMenus); // Change Price and Time from Menus
+    const OrdersMenus = ValueOfMenus(ActiveMenus); //Sort and delete
     return (
         <div className="Menu_modal">
-            {Orders_menus.length ? (
+            {OrdersMenus.length ? (
                 <ul className='List_Total_Specialists'>
-                    { Orders_menus.map(menu => {
+                    { OrdersMenus.map(menu => {
                         return (<MenuList menu={menu} key={menu.id} />)
                     })}
                 </ul>
@@ -29,7 +28,7 @@ const Order_menu_of_User = ({infoModal}) => {
                 <p className='noMenu'>Sorry, you no have any orders</p>
             )}
             <AddNewProductsModal />
-            <TotalInfoRender TotalMenu={TotalMenu} key={(new Date()).getTime()} />
+            <TotalInfoRender TotalMenu={ TotalMenu } key={(new Date()).getTime()} />
         </div>
     )
 };

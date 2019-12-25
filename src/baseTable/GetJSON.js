@@ -5,12 +5,12 @@ import List_Orders_JSON from '../DB/List_Orders';    // List Orders
 
 //Push Info to LocalHost
 if(localStorage.getItem('Specialists') === null) localStorage.setItem('Specialists', JSON.stringify(Specialists_JSON));
-if(localStorage.getItem('List_Menu') === null) localStorage.setItem('List_Menu', JSON.stringify(List_Menu_JSON));
-if(localStorage.getItem('List_Orders') === null) localStorage.setItem('List_Orders', JSON.stringify(List_Orders_JSON));
+if(localStorage.getItem('ListMenu') === null) localStorage.setItem('ListMenu', JSON.stringify(List_Menu_JSON));
+if(localStorage.getItem('ListOrders') === null) localStorage.setItem('ListOrders', JSON.stringify(List_Orders_JSON));
 
 //Get Info from LocalHost
 const Specialists = JSON.parse(localStorage.getItem("Specialists"));
-const List_Menu = JSON.parse(localStorage.getItem("List_Menu"));
-const List_Orders = JSON.parse(localStorage.getItem("List_Orders"));
+const ListMenu = JSON.parse(localStorage.getItem("ListMenu"));
+const ListOrders = JSON.parse(localStorage.getItem("ListOrders"));
 
-export { Specialists, List_Menu, List_Orders }
+export { Specialists, ListMenu, ListOrders }
